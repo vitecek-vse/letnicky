@@ -15,3 +15,13 @@ Pracovní větev: `vylepseni`. Na webu (bocrew.com) běží jen `main`, takže z
 ## Nápady
 - [ ] Ikona a fullscreen pro iPhone (Přidat na plochu)
 - [ ] (sem doplňovat další postřehy z používání)
+
+## Verze pro celou školu (ČZA Mělník)
+- [ ] Nejdřív souhlas Ing. Šebestíkové (e-mail v Gmailu – Koncepty), pak oslovit vedení (ředitelka Ing. Anna Richterová, richterova@zas-me.cz)
+- [ ] Úvodní stránka s výběrem oblastí a sad, např.:
+  - Letničky → sada 1, sada 2, sada 3…
+  - (další oblasti podle materiálů učitelů: trvalky, dřeviny, pokojové rostliny…)
+- [ ] Struktura souborů po sadách: `img/letnicky-1/`, `img/letnicky-2/` … + data sad mimo index.html (např. `data/letnicky-1.json`)
+- [ ] Režim „mix“ – procvičit náhodně napříč vybranými sadami (příprava na test)
+- [ ] Patička s autorstvím materiálů a kontaktem
+- [ ] Rozvrhnout oblasti a sady (David navrhne)
