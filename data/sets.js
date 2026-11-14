@@ -1,4 +1,4 @@
-// Oblasti a sady rostlin. Fotky: img/<id-sady>/NN.jpg
+// Oblasti a sady rostlin. Fotky: img/<id-sady>/NN.jpg, cover = úvodní fotka dlaždice
 window.AREAS = [
  {
   "name": "Letničky",
@@ -6,8 +6,9 @@ window.AREAS = [
    {
     "id": "letnicky-1",
     "title": "Letničky č. 1",
-    "short": "Sada 1",
+    "short": "Letničky č. 1",
     "note": "",
+    "cover": "img/letnicky-1/32.jpg",
     "plants": [
      {
       "lat": "Ageratum houstonianum",
@@ -174,8 +175,9 @@ window.AREAS = [
    {
     "id": "letnicky-2",
     "title": "Letničky č. 2",
-    "short": "Sada 2",
+    "short": "Letničky č. 2",
     "note": "",
+    "cover": "img/letnicky-2/12.jpg",
     "plants": [
      {
       "lat": "Ammobium alatum",
@@ -366,9 +368,10 @@ window.AREAS = [
    },
    {
     "id": "letnicky-3",
-    "title": "Letničky č. 3 (náhradní)",
-    "short": "Sada 3",
+    "title": "Letničky č. 3",
+    "short": "Letničky č. 3",
     "note": "náhradní",
+    "cover": "img/letnicky-3/05.jpg",
     "plants": [
      {
       "lat": "Salvia coccinea",

@@ -62,3 +62,7 @@ Pracovní větev: `vylepseni`. Na webu (bocrew.com) běží jen `main`, takže z
 ## Verze 1.6 (ve větvi vylepseni)
 - [x] Úvod ve 3 krocích (1 Vyber sadu · 2 Jak se chceš učit · 3 Start), kratší texty pro studenty
 - [x] Po klepnutí na sadu se hned ukáže, co je vybráno a kolik je rostlin
+
+## Verze 1.7 (ve větvi vylepseni)
+- [x] Sady pojmenované jako v PDF: Letničky č. 1, 2, 3
+- [x] Úvodní fotka na každé dlaždici sady (`cover` v data/sets.js)
