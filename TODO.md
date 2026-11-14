@@ -13,7 +13,7 @@ Pracovní větev: `vylepseni`. Na webu (bocrew.com) běží jen `main`, takže z
 - [ ] Patička s autorstvím materiálů (po souhlasu autorky)
 
 ## Nápady
-- [ ] Ikona a fullscreen pro iPhone (Přidat na plochu)
+- [x] Ikona a fullscreen pro iPhone (Přidat na plochu)
 - [ ] (sem doplňovat další postřehy z používání)
 
 ## Verze pro celou školu (ČZA Mělník)
@@ -34,3 +34,5 @@ Pracovní větev: `vylepseni`. Na webu (bocrew.com) běží jen `main`, takže z
 - Letničky č. 2 (37 druhů) a č. 3 – náhradní (7 druhů)
 - Data v `data/sets.js`, fotky v `img/letnicky-1..3/`
 - Počítadlo GoatCounter se načte jen na bocrew.com (testy se nepočítají)
+- Ikona na plochu, ořez kolem výřezu displeje (safe area), offline režim (service worker `sw.js`), menší fotky (~60 kB)
+- Po změně fotek/dat/index.html spustit `python3 tools/build-sw.py` (aktualizuje offline cache)

@@ -2,16 +2,22 @@
 <html lang="cs">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#3f7d3a">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Poznávačka">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="icon" type="image/png" href="icons/favicon-32.png">
+<link rel="manifest" href="manifest.webmanifest">
 <title>Poznávačka rostlin – ČZA Mělník</title>
 <style>
   :root{--bg:#f6f5ef;--card:#fff;--ink:#22301f;--muted:#6b7566;--green:#3f7d3a;--green-bg:#e8f2e5;--red:#b5433a;--amber:#b7862b;--line:#e1e3d8;--photo:#eef0e8}
   *{box-sizing:border-box}
-  body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--ink)}
+  body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--ink);padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)}
   .wrap{max-width:760px;margin:0 auto;padding:16px}
+  .offline{display:none;background:#fbf5e8;color:#7a5a17;border:1px solid #ecd9a8;border-radius:10px;padding:8px 12px;font-size:13px;margin-bottom:12px}
+  body.is-offline .offline{display:block}
   h1{font-size:21px;margin:0}
   .sub{color:var(--muted);font-size:14px;margin:4px 0 18px}
   .area{margin-bottom:18px}
@@ -73,7 +79,8 @@
 </style>
 </head>
 <body>
-<div class="wrap" id="app"></div>
+<div class="wrap"><div class="offline">Jsi offline – procvičuješ z uložených dat.</div></div>
+<div class="wrap" id="app" style="padding-top:0"></div>
 <div class="wrap"><footer>Fotografie a názvy rostlin: studijní materiály <a href="https://www.zas-me.cz/" target="_blank" rel="noopener">ČZA Mělník</a></footer></div>
 <script src="data/sets.js"></script>
 <script>
@@ -271,6 +278,11 @@ document.addEventListener("keydown", e => {
 });
 window.addEventListener("hashchange", () => { if (location.hash !== "#procvicovani" && $("bBack")) renderHome(); });
 renderHome();
+
+// offline: uložit web do telefonu (jen na https, mimo náhledy)
+const setOnline = () => document.body.classList.toggle("is-offline", !navigator.onLine);
+addEventListener("online", setOnline); addEventListener("offline", setOnline); setOnline();
+try { if ("serviceWorker" in navigator && location.protocol === "https:" && /(^|\.)bocrew\.com$|github\.io$/.test(location.hostname)) navigator.serviceWorker.register("sw.js").catch(() => {}); } catch (e) {}
 
 // počítadlo návštěv jen na ostrém webu
 if (/(^|\.)bocrew\.com$/.test(location.hostname)) {
