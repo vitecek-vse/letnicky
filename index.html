@@ -80,7 +80,12 @@
   .about summary{cursor:pointer;color:var(--green);display:inline-block;list-style:none}
   .about summary::-webkit-details-marker{display:none}
   .about p{margin:6px auto;max-width:420px}
-  .about .ver{font-family:ui-monospace,Menlo,monospace;font-size:11px;margin-top:10px}
+  .aboutbox{text-align:left;max-width:460px;margin:10px auto 0;background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 14px;font-size:13px;line-height:1.55;color:var(--ink)}
+  .aboutbox h3{font-size:14px;margin:12px 0 6px}
+  .aboutbox ul{margin:0;padding-left:18px}
+  .aboutbox li{margin:4px 0}
+  .aboutbox p{margin:6px 0;max-width:none}
+  .about .ver{font-family:ui-monospace,Menlo,monospace;font-size:11px;margin-top:12px;color:var(--muted);text-align:center}
 </style>
 </head>
 <body>
@@ -88,10 +93,23 @@
 <div class="wrap" id="app" style="padding-top:0"></div>
 <div class="wrap"><footer>Fotografie a názvy rostlin: studijní materiály <a href="https://www.zas-me.cz/" target="_blank" rel="noopener">ČZA Mělník</a>
   <details class="about"><summary>O aplikaci</summary>
+    <div class="aboutbox">
     <p>Poznávačka rostlin pro procvičování studentů České zahradnické akademie Mělník.</p>
-    <p>Vytvořil dobrovolně Ing. David Víteček, Ph.D., na podporu školy.</p>
-    <p>Pokrok se ukládá jen v tvém telefonu. Web nesbírá žádné osobní údaje, počítá jen anonymní návštěvy.</p>
+    <p>Fotografie a názvy rostlin: studijní materiály <a href="https://www.zas-me.cz/" target="_blank" rel="noopener">ČZA Mělník</a>.<br>
+    Vytvořeno dobrovolně a zdarma v rámci podpory školy – Ing. David Víteček, Ph.D.</p>
+    <h3>Bezpečnost a soukromí</h3>
+    <ul>
+      <li><b>Bez registrace a přihlášení</b> – nezadáváš žádné osobní údaje.</li>
+      <li><b>Pokrok zůstává ve tvém telefonu</b> – ukládá se jen v prohlížeči, nikam se neodesílá. Smažeš ho vymazáním dat prohlížeče.</li>
+      <li><b>Bez cookies a bez reklam</b> – žádné sledování napříč weby.</li>
+      <li><b>Šifrované spojení HTTPS</b> s certifikátem Let's Encrypt.</li>
+      <li><b>Anonymní statistika návštěv</b> (GoatCounter) – neukládá IP adresy ani jiné osobní údaje a nepoužívá cookies.</li>
+      <li><b>Hosting GitHub Pages</b> – jako u běžného webhostingu provozovatel z bezpečnostních důvodů zaznamenává technické údaje o přístupu (např. IP adresu).</li>
+      <li><b>Ochrana soukromí od návrhu</b> (privacy by design, zásada minimalizace údajů podle GDPR) – web zpracovává jen to, co je nutné pro jeho fungování.</li>
+      <li><b>Otevřený zdrojový kód</b> – kdokoli si může ověřit, co web dělá: <a href="https://github.com/vitecek-vse/letnicky" target="_blank" rel="noopener">GitHub</a>.</li>
+    </ul>
     <p class="ver" id="ver"></p>
+    </div>
   </details></footer></div>
 <script src="data/sets.js"></script>
 <script>
