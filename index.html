@@ -87,7 +87,13 @@
   .aboutbox p{margin:6px 0;max-width:none}
   .about .ver{font-family:ui-monospace,Menlo,monospace;font-size:11px;margin-top:12px;color:var(--muted);text-align:center}
   .grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}
-  .grid2 .btn{min-width:0}
+  .grid2 .btn{min-width:0;line-height:1.25}
+  .btn small{display:block;font-size:12px;font-weight:400;opacity:.85;margin-top:3px}
+  .step{display:flex;align-items:center;gap:8px;font-size:15px;font-weight:600;margin:18px 0 8px}
+  .step span{width:24px;height:24px;border-radius:50%;background:var(--green);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:13px}
+  .selhelp{font-size:14px;color:var(--ink);margin:-6px 0 4px;padding:8px 2px}
+  .selhelp .tip{color:var(--muted);font-size:13px}
+  .modehelp{background:#fff;border:1px solid var(--line);border-left:4px solid var(--green);border-radius:0 10px 10px 0;padding:10px 12px;font-size:14px;line-height:1.45;margin:2px 0 4px}
   .btn.amber{background:#b7862b}
   .photo{position:relative;cursor:zoom-in}
   .zoomhint{position:absolute;right:8px;bottom:8px;background:rgba(255,255,255,.85);border-radius:999px;padding:2px 7px;font-size:13px}
@@ -139,7 +145,6 @@
       <li><b>Ochrana soukromí od návrhu</b> (privacy by design, zásada minimalizace údajů podle GDPR) – web zpracovává jen to, co je nutné pro jeho fungování.</li>
       <li><b>Otevřený zdrojový kód</b> – kdokoli si může ověřit, co web dělá: <a href="https://github.com/vitecek-vse/letnicky" target="_blank" rel="noopener">GitHub</a>.</li>
     </ul>
-    <p class="ver" id="visits"></p>
     <p class="ver" id="ver"></p>
     </div>
   </details></footer></div>
@@ -147,15 +152,9 @@
 <script src="data/sets.js"></script>
 <script>
 // ---------- verze ----------
-const VERSION = "1.4", VERSION_DATE = "14. 11. 2026";
+const VERSION = "1.6", VERSION_DATE = "14. 11. 2026";
 const LIVE = /(^|\.)bocrew\.com$/.test(location.hostname);
 document.getElementById("ver").textContent = "Verze " + VERSION + " · " + VERSION_DATE + (LIVE ? "" : " · testovací náhled");
-// počet návštěv (GoatCounter – veřejné celkové číslo, bez osobních údajů)
-if (LIVE) fetch("https://bocrew.goatcounter.com/counter/TOTAL.json")
-  .then(r => r.ok ? r.json() : null)
-  .then(d => { if (d && d.count) document.getElementById("visits").textContent = "Návštěv celkem: " + d.count.replace(/[, ]/g, " "); })
-  .catch(() => {});
-else document.getElementById("visits").textContent = "Počet návštěv se zobrazí jen na bocrew.com";
 
 // ---------- data ----------
 const SETS = {}; AREAS.forEach(a => a.sets.forEach(s => { s.area = a.name; SETS[s.id] = s; }));
@@ -222,17 +221,21 @@ function renderHome() {
   const all = Object.values(SETS).reduce((n, s) => n + s.plants.length, 0);
   $("app").innerHTML = `
     <h1>🌼 Poznávačka rostlin</h1>
-    <div class="sub">ČZA Mělník · vyber sady, které chceš procvičit</div>
+    <div class="sub">ČZA Mělník · 3 kroky a jedeš</div>
+    <div class="step"><span>1</span>Vyber sadu</div>
     ${AREAS.map(a => `<div class="area"><h2>${esc(a.name)}</h2><div class="tiles">${a.sets.map(tile).join("")}</div></div>`).join("")}
-    <div class="label">Jak procvičovat</div>
+    <div class="selhelp">${selHelp(total)}</div>
+    <div class="step"><span>2</span>Vyber, jak se chceš učit</div>
     ${modesHtml()}
+    <div class="modehelp" id="modehelp">${MODE_HELP[mode]}</div>
+    <div class="step"><span>3</span>Start</div>
     <div class="grid2">
-      <button class="btn" id="bStart" ${total ? "" : "disabled"}>${total ? `Procvičit vybrané (${total})` : "Vyber aspoň jednu sadu"}</button>
-      <button class="btn amber" id="bTest" ${total ? "" : "disabled"}>Test se známkou (${Math.min(20, total)})</button>
-      <button class="btn sec" id="bMix">Mix – všechno (${all})</button>
-      <button class="btn sec" id="bAtlas" ${total ? "" : "disabled"}>Atlas rostlin</button>
+      <button class="btn sec" id="bAtlas" ${total ? "" : "disabled"}>Atlas rostlin (${total})<small>jen koukat, nic se nezkouší</small></button>
+      <button class="btn" id="bStart" ${total ? "" : "disabled"}>${total ? `Procvičit (${total})` : "Vyber sadu"}<small>nejdřív to, co ještě neumíš</small></button>
+      <button class="btn amber" id="bTest" ${total ? "" : "disabled"}>Test (${Math.min(20, total)})<small>max. 20 karet + známka</small></button>
+      <button class="btn sec" id="bMix">Mix (${all})<small>všechny sady najednou</small></button>
     </div>
-    <p class="hint">Procvičování dává přednost rostlinám, které ještě neumíš. Test: náhodné karty bez nápověd, na konci známka.</p>`;
+    `;
   document.querySelectorAll(".tile").forEach(t => t.onclick = () => {
     const id = t.dataset.id;
     selected = selected.includes(id) ? selected.filter(x => x !== id) : [...selected, id];
@@ -254,6 +257,18 @@ function tile(s) {
     <div class="p ${k ? "" : "none"}">Umíš ${k} z ${n}</div><div class="bar2"><div style="width:${k / n * 100}%"></div></div>
     ${extra ? `<div class="n" style="margin-top:4px">${extra}</div>` : ""}
   </button>`;
+}
+const MODE_HELP = {
+  flip: "👀 Koukni na fotku, vzpomeň si na název, otoč kartu. Nic nepíšeš – nejrychlejší start.",
+  choice: "👆 Ke fotce jsou 4 názvy. Klepni na ten správný.",
+  cz: "✍️ Napiš český název. Háčky a čárky nevadí.",
+  lat: "✍️ Napiš latinský název. Háčky ani velká písmena nevadí.",
+  both: "🎓 Napiš oba názvy – přesně jako u poznávačky ve škole."
+};
+function selHelp(total) {
+  if (!selected.length) return "👆 Klepni na sadu, kterou se chceš učit.";
+  const names = Object.keys(SETS).filter(id => selected.includes(id)).map(id => SETS[id].short).join(" + ");
+  return `✅ Vybráno: ${names} · ${total} rostlin` + (selected.length === 1 ? `<br><span class="tip">Tip: klepni i na další sadu a uč se víc najednou.</span>` : "");
 }
 const MODES = [["flip","Bez psaní (jen otočit)"],["choice","Výběr ze 4"],["cz","Jen česky"],["lat","Jen latinsky"],["both","Latinsky + česky"]];
 function modesHtml() {
