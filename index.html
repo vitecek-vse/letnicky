@@ -23,13 +23,18 @@
   .area{margin-bottom:18px}
   .area h2{font-size:14px;font-weight:600;color:var(--muted);margin:0 0 8px;text-transform:none}
   .tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
-  .tile{position:relative;background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px;text-align:left;cursor:pointer;font:inherit;color:inherit}
-  .tile.on{border:2px solid var(--green);background:var(--green-bg);padding:11px}
+  .tile{position:relative;background:#fff;border:2px solid var(--line);border-radius:16px;padding:0;overflow:hidden;text-align:left;cursor:pointer;font:inherit;color:inherit;transition:transform .12s,box-shadow .12s}
+  .tile:active{transform:scale(.97)}
+  .tile.on{border-color:var(--green);background:var(--green-bg);box-shadow:0 4px 14px rgba(63,125,58,.18)}
+  .tile .cover{position:relative;height:92px;background-size:cover;background-position:center}
+  .tile:not(.on) .cover{filter:saturate(.75)}
+  .tile .tb{padding:10px 12px 12px}
+  .tile .badge{position:absolute;left:8px;bottom:8px;background:rgba(255,255,255,.9);color:var(--ink);font-size:11px;border-radius:999px;padding:2px 8px}
   .tile .t{font-size:16px;font-weight:600}
   .tile .n{font-size:13px;color:var(--muted);margin-top:2px}
   .tile .p{font-size:13px;margin-top:8px;color:var(--green);font-weight:600}
   .tile .p.none{color:var(--muted);font-weight:400}
-  .tile .chk{position:absolute;top:10px;right:10px;width:20px;height:20px;border-radius:50%;border:1.5px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:13px;color:#fff}
+  .tile .chk{position:absolute;top:8px;right:8px;width:24px;height:24px;border-radius:50%;border:2px solid #fff;background:rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center;font-size:14px;color:#fff}
   .tile.on .chk{background:var(--green);border-color:var(--green)}
   .bar2{height:4px;background:var(--line);border-radius:2px;margin-top:4px;overflow:hidden}
   .bar2 div{height:100%;background:var(--green)}
@@ -152,7 +157,7 @@
 <script src="data/sets.js"></script>
 <script>
 // ---------- verze ----------
-const VERSION = "1.6", VERSION_DATE = "14. 11. 2026";
+const VERSION = "1.7", VERSION_DATE = "14. 11. 2026";
 const LIVE = /(^|\.)bocrew\.com$/.test(location.hostname);
 document.getElementById("ver").textContent = "Verze " + VERSION + " · " + VERSION_DATE + (LIVE ? "" : " · testovací náhled");
 
@@ -162,7 +167,7 @@ const $ = id => document.getElementById(id);
 const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const shuffle = a => { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
 const plantsOf = ids => ids.flatMap(id => SETS[id].plants.map(p => ({...p, set: id})));
-const setName = id => SETS[id].area + " – " + SETS[id].short;
+const setName = id => SETS[id].title;
 
 // ---------- úložiště (jen v prohlížeči studenta) ----------
 const store = {
@@ -251,11 +256,13 @@ function tile(s) {
   const on = selected.includes(s.id), pr = progress[s.id], k = known(s.id), n = s.plants.length;
   const extra = [pr ? `naposledy ${pr.last} %` : "", pr && pr.grade ? `test: ${pr.grade}` : ""].filter(Boolean).join(" · ");
   return `<button class="tile ${on ? "on" : ""}" data-id="${s.id}" aria-pressed="${on}">
-    <span class="chk">${on ? "✓" : ""}</span>
-    <div class="t">${esc(s.short)}</div>
-    <div class="n">${n} druhů${s.note ? " · " + esc(s.note) : ""}</div>
-    <div class="p ${k ? "" : "none"}">Umíš ${k} z ${n}</div><div class="bar2"><div style="width:${k / n * 100}%"></div></div>
-    ${extra ? `<div class="n" style="margin-top:4px">${extra}</div>` : ""}
+    <div class="cover" style="background-image:url('${s.cover}')"><span class="chk">${on ? "✓" : ""}</span></div>
+    <div class="tb">
+      <div class="t">${esc(s.title)}</div>
+      <div class="n">${n} druhů</div>
+      <div class="p ${k ? "" : "none"}">Umíš ${k} z ${n}</div><div class="bar2"><div style="width:${k / n * 100}%"></div></div>
+      ${extra ? `<div class="n" style="margin-top:4px">${extra}</div>` : ""}
+    </div>
   </button>`;
 }
 const MODE_HELP = {
