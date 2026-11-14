@@ -36,3 +36,5 @@ Pracovní větev: `vylepseni`. Na webu (bocrew.com) běží jen `main`, takže z
 - Počítadlo GoatCounter se načte jen na bocrew.com (testy se nepočítají)
 - Ikona na plochu, ořez kolem výřezu displeje (safe area), offline režim (service worker `sw.js`), menší fotky (~60 kB)
 - Po změně fotek/dat/index.html spustit `python3 tools/build-sw.py` (aktualizuje offline cache)
+- Panel „O aplikaci“ (dole na stránce) s verzí – při každém vydání zvýšit `VERSION` a `VERSION_DATE` v index.html a spustit `python3 tools/build-sw.py`
+  - 1.0 první verze (Letničky č. 1) · 1.1 výběr sad, Letničky č. 2 a 3 · 1.2 iPhone (ikona, offline), panel O aplikaci

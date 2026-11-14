@@ -76,14 +76,30 @@
   details td:first-child{font-style:italic}
   footer{margin:28px 0 8px;font-size:12px;color:var(--muted);text-align:center;line-height:1.6}
   footer a{color:var(--green)}
+  .about{margin-top:10px;text-align:center}
+  .about summary{cursor:pointer;color:var(--green);display:inline-block;list-style:none}
+  .about summary::-webkit-details-marker{display:none}
+  .about p{margin:6px auto;max-width:420px}
+  .about .ver{font-family:ui-monospace,Menlo,monospace;font-size:11px;margin-top:10px}
 </style>
 </head>
 <body>
 <div class="wrap"><div class="offline">Jsi offline – procvičuješ z uložených dat.</div></div>
 <div class="wrap" id="app" style="padding-top:0"></div>
-<div class="wrap"><footer>Fotografie a názvy rostlin: studijní materiály <a href="https://www.zas-me.cz/" target="_blank" rel="noopener">ČZA Mělník</a></footer></div>
+<div class="wrap"><footer>Fotografie a názvy rostlin: studijní materiály <a href="https://www.zas-me.cz/" target="_blank" rel="noopener">ČZA Mělník</a>
+  <details class="about"><summary>O aplikaci</summary>
+    <p>Poznávačka rostlin pro procvičování studentů České zahradnické akademie Mělník.</p>
+    <p>Vytvořil dobrovolně Ing. David Víteček, Ph.D., na podporu školy.</p>
+    <p>Pokrok se ukládá jen v tvém telefonu. Web nesbírá žádné osobní údaje, počítá jen anonymní návštěvy.</p>
+    <p class="ver" id="ver"></p>
+  </details></footer></div>
 <script src="data/sets.js"></script>
 <script>
+// ---------- verze ----------
+const VERSION = "1.2", VERSION_DATE = "14. 11. 2026";
+const LIVE = /(^|\.)bocrew\.com$/.test(location.hostname);
+document.getElementById("ver").textContent = "Verze " + VERSION + " · " + VERSION_DATE + (LIVE ? "" : " · testovací náhled");
+
 // ---------- data ----------
 const SETS = {}; AREAS.forEach(a => a.sets.forEach(s => { s.area = a.name; SETS[s.id] = s; }));
 const $ = id => document.getElementById(id);
