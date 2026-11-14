@@ -371,7 +371,7 @@ window.AREAS = [
     "title": "Letničky č. 3",
     "short": "Letničky č. 3",
     "note": "náhradní",
-    "cover": "img/letnicky-3/03.jpg",
+    "cover": "img/covers/letnicky-3.jpg",
     "plants": [
      {
       "lat": "Salvia coccinea",
