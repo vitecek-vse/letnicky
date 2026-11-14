@@ -8,7 +8,7 @@ window.AREAS = [
     "title": "Letničky č. 1",
     "short": "Letničky č. 1",
     "note": "",
-    "cover": "img/letnicky-1/32.jpg",
+    "cover": "img/letnicky-1/25.jpg",
     "plants": [
      {
       "lat": "Ageratum houstonianum",
@@ -371,7 +371,7 @@ window.AREAS = [
     "title": "Letničky č. 3",
     "short": "Letničky č. 3",
     "note": "náhradní",
-    "cover": "img/letnicky-3/05.jpg",
+    "cover": "img/letnicky-3/03.jpg",
     "plants": [
      {
       "lat": "Salvia coccinea",
