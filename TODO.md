@@ -5,6 +5,8 @@ Pracovní větev: `vylepseni`. Na webu (bocrew.com) běží jen `main`, takže z
 ## Fotky
 - [ ] Č. 11 Dahlia hortensis (jiřinka) – oříznout úzký proužek sousední fotky na okraji
 - [ ] Č. 29 Tagetes patula (aksamitník rozkladitý) – oříznout proužek sousední fotky vpravo
+- [ ] Č. 24 Matthiola incana (fiala šedivá) – dole pod malou fotkou zbytek dalšího obrázku, oříznout; zvážit i prázdné bílé místo vlevo nahoře
+- [ ] Projít všechny karty s vloženými detailními fotkami (11, 12, 13, 16, 19, 20, 21, 22, 24, 27) a sjednotit ořez
 
 ## Obsah
 - [ ] Letničky č. 2 – přidat druhou sadu z PDF, přepínač sad 1 / 2
