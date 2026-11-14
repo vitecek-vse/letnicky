@@ -120,6 +120,67 @@
   .acard .ab{font-size:12px;color:var(--green);padding:2px 10px 8px;min-height:18px}
   .grade{width:72px;height:72px;margin:0 auto 10px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:38px;font-weight:700;color:#fff;background:var(--green)}
   .grade.g3{background:var(--amber)} .grade.g4,.grade.g5{background:var(--red)}
+  .mtiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+  .mtile{position:relative;background:#fff;border:2px solid var(--line);border-bottom-width:4px;border-radius:16px;padding:0;overflow:hidden;text-align:left;cursor:pointer;font:inherit;color:inherit;transition:transform .1s}
+  .mtile{display:flex;flex-direction:column;justify-content:flex-start}
+  .mtile .mhead{flex:none;width:100%}
+  .mtile .tb{flex:1;width:100%}
+  .mtile:active{transform:translateY(2px);border-bottom-width:2px}
+  .mtile .mhead{position:relative;height:64px;display:flex;align-items:center;justify-content:center}
+  .mtile .micon{font-size:32px;line-height:1}
+  .mtile .chk{position:absolute;top:8px;right:8px;width:24px;height:24px;border-radius:50%;border:2px solid rgba(0,0,0,.15);background:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;color:#fff}
+  .mtile.on{border-color:var(--green);box-shadow:0 4px 14px rgba(63,125,58,.18)}
+  .mtile.on .chk{background:var(--green);border-color:var(--green)}
+  .mtile .tb{padding:10px 12px 12px}
+  .mtile .t{font-size:16px;font-weight:700}
+  .mtile .n{font-size:13px;color:var(--muted);margin-top:2px;min-height:34px}
+  .lvl{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted);margin-top:6px}
+  .dots{display:inline-flex;gap:3px} .dots i{width:8px;height:8px;border-radius:2px;background:var(--line)} .dots i.f{background:var(--green)}
+  .c-blue .mhead{background:#e3f1fc} .c-violet .mhead{background:#efe7fc} .c-amber .mhead{background:#fdf0d8} .c-rose .mhead{background:#fce4e4} .c-green .mhead{background:#e3f2e1}
+  .atiles{display:grid;gap:10px}
+  .atile{display:flex;align-items:center;gap:12px;width:100%;background:#fff;border:2px solid var(--line);border-bottom-width:4px;border-radius:16px;padding:12px 14px;font:inherit;color:var(--ink);text-align:left;cursor:pointer;transition:transform .1s}
+  .atile:active:not(:disabled){transform:translateY(2px);border-bottom-width:2px}
+  .atile:disabled{opacity:.5;cursor:default}
+  .atile .aicon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;flex:none;background:var(--photo)}
+  .atile .atext{flex:1;display:flex;flex-direction:column}
+  .atile b{font-size:17px} .atile em{font-style:normal;font-weight:600;font-size:13px;color:var(--muted);margin-left:4px}
+  .atile small{font-size:13px;color:var(--muted);margin-top:1px}
+  .atile .arrow{font-size:26px;color:var(--muted);line-height:1}
+  .a-go{background:var(--green);border-color:#2f6a2b;color:#fff} .a-go small,.a-go em,.a-go .arrow{color:rgba(255,255,255,.85)} .a-go .aicon{background:rgba(255,255,255,.2)}
+  .a-test .aicon{background:#fdf0d8} .a-atlas .aicon{background:#e3f1fc} .a-mix .aicon{background:#efe7fc}
+  .mtile .mhead{height:84px;padding:0 10px}
+  .mtile .tb{position:relative}
+  .mtile .tb .chk{top:10px;right:10px}
+  .mtile .t{padding-right:28px}
+  .pv{width:100%;display:flex;align-items:center;justify-content:center;gap:5px;font-size:11px;line-height:1.2}
+  .pv-in{flex-direction:column;gap:5px}
+  .pin{display:block;width:100%;max-width:150px;background:#fff;border:1.5px solid #c9cfc0;border-radius:7px;padding:5px 7px;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:left}
+  .pin b{color:var(--green);font-weight:400;animation:blink 1s steps(1) infinite}
+  @keyframes blink{50%{opacity:0}}
+  .pv-choice{display:grid;grid-template-columns:1fr 1fr;gap:4px;max-width:150px}
+  .pv-choice span{background:#fff;border:1.5px solid #d6cdea;border-radius:7px;padding:4px 5px;text-align:center;font-style:italic;white-space:nowrap}
+  .pv-choice span.ok{border-color:var(--green);background:#eef7ec;color:var(--green);font-weight:600}
+  .pcard{display:flex;flex-direction:column;align-items:center;justify-content:center;width:62px;height:58px;background:#fff;border:1.5px solid #bcd6ee;border-radius:8px;text-align:center;padding:3px}
+  .pcard.q{font-size:22px;font-weight:700;color:#7aa7d4}
+  .pcard.a i{font-weight:600;font-size:10px;margin-bottom:2px}
+  .pcard.a{font-size:10px}
+  .parr{font-size:16px;color:#5b8fc4}
+  .atiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+  .atile2 .t em{font-style:normal;font-weight:600;font-size:13px;color:var(--muted);margin-left:2px}
+  .atile2 .n{min-height:0}
+  .atile2:disabled{opacity:.5;cursor:default}
+  .a-atlas .mhead{background:#e3f1fc} .a-test .mhead{background:#fdf0d8} .a-mix .mhead{background:#efe7fc}
+  .a-go{border-color:#2f6a2b;background:var(--green);color:#fff} .a-go .mhead{background:#5a9a52} .a-go .n,.a-go .t em{color:rgba(255,255,255,.85)}
+  .pv-atlas{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;max-width:150px}
+  .pv-atlas span{aspect-ratio:1;border-radius:6px;background-size:cover;background-position:center;border:2px solid #fff}
+  .pv-go{gap:8px;justify-content:flex-start;max-width:160px}
+  .pv-go .ph{width:52px;height:52px;border-radius:8px;background-size:cover;background-position:center;border:2px solid #fff;flex:none}
+  .gi{display:flex;flex-direction:column;gap:3px;color:#fff;text-align:left}
+  .gi b{font-size:11px} .gi small{font-size:10px;opacity:.9}
+  .pb{display:block;width:76px;height:6px;background:rgba(255,255,255,.35);border-radius:3px;overflow:hidden} .pb i{display:block;height:100%;background:#fff}
+  .pv-test{gap:10px} .pv-test .gi{color:var(--ink)} .pv-test .gi b{font-size:14px}
+  .gr{width:46px;height:46px;border-radius:50%;background:var(--green);color:#fff;font-size:24px;font-weight:700;display:flex;align-items:center;justify-content:center;border:3px solid #fff}
+  .pv-mix span{width:44px;height:56px;border-radius:7px;background-size:cover;background-position:center;border:2px solid #fff;margin:0 -6px;box-shadow:0 2px 6px rgba(0,0,0,.15)}
 </style>
 </head>
 <body>
@@ -157,7 +218,7 @@
 <script src="data/sets.js"></script>
 <script>
 // ---------- verze ----------
-const VERSION = "1.7", VERSION_DATE = "14. 11. 2026";
+const VERSION = "1.10", VERSION_DATE = "14. 11. 2026";
 const LIVE = /(^|\.)bocrew\.com$/.test(location.hostname);
 document.getElementById("ver").textContent = "Verze " + VERSION + " · " + VERSION_DATE + (LIVE ? "" : " · testovací náhled");
 
@@ -231,14 +292,13 @@ function renderHome() {
     ${AREAS.map(a => `<div class="area"><h2>${esc(a.name)}</h2><div class="tiles">${a.sets.map(tile).join("")}</div></div>`).join("")}
     <div class="selhelp">${selHelp(total)}</div>
     <div class="step"><span>2</span>Vyber, jak se chceš učit</div>
-    ${modesHtml()}
-    <div class="modehelp" id="modehelp">${MODE_HELP[mode]}</div>
+    <div class="mtiles">${MODES.map(modeTile).join("")}</div>
     <div class="step"><span>3</span>Start</div>
-    <div class="grid2">
-      <button class="btn sec" id="bAtlas" ${total ? "" : "disabled"}>Atlas rostlin (${total})<small>jen koukat, nic se nezkouší</small></button>
-      <button class="btn" id="bStart" ${total ? "" : "disabled"}>${total ? `Procvičit (${total})` : "Vyber sadu"}<small>nejdřív to, co ještě neumíš</small></button>
-      <button class="btn amber" id="bTest" ${total ? "" : "disabled"}>Test (${Math.min(20, total)})<small>max. 20 karet + známka</small></button>
-      <button class="btn sec" id="bMix">Mix (${all})<small>všechny sady najednou</small></button>
+    <div class="atiles">
+      ${actTile("bAtlas", "atlas", "Atlas", total, "jen koukat, nic se nezkouší", !total)}
+      ${actTile("bStart", "go", "Procvičit", total, "nejdřív to, co ještě neumíš", !total)}
+      ${actTile("bTest", "test", "Test", Math.min(20, total), "max. 20 karet + známka", !total)}
+      ${actTile("bMix", "mix", "Mix", all, "všechny sady najednou", false)}
     </div>
     `;
   document.querySelectorAll(".tile").forEach(t => t.onclick = () => {
@@ -246,7 +306,7 @@ function renderHome() {
     selected = selected.includes(id) ? selected.filter(x => x !== id) : [...selected, id];
     store.set("selected-v1", selected); renderHome();
   });
-  bindModes(renderHome);
+  document.querySelectorAll(".mtile").forEach(t => t.onclick = () => { mode = t.dataset.m; store.set("mode-v1", mode); renderHome(); });
   $("bStart").onclick = () => start({ids: selected, kind: "practice"});
   $("bTest").onclick = () => start({ids: selected, kind: "test"});
   $("bMix").onclick = () => start({ids: Object.keys(SETS), kind: "practice"});
@@ -278,6 +338,43 @@ function selHelp(total) {
   return `✅ Vybráno: ${names} · ${total} rostlin` + (selected.length === 1 ? `<br><span class="tip">Tip: klepni i na další sadu a uč se víc najednou.</span>` : "");
 }
 const MODES = [["flip","Bez psaní (jen otočit)"],["choice","Výběr ze 4"],["cz","Jen česky"],["lat","Jen latinsky"],["both","Latinsky + česky"]];
+const MODE_INFO = {
+  flip:   {icon: "👀", title: "Otoč kartu", desc: "Koukni, vzpomeň si, otoč. Nic nepíšeš.", lvl: 1, col: "blue"},
+  choice: {icon: "👆", title: "Výběr ze 4", desc: "Klepni na správný název.", lvl: 2, col: "violet"},
+  cz:     {icon: "✍️", title: "Česky", desc: "Napiš český název.", lvl: 3, col: "amber"},
+  lat:    {icon: "🔤", title: "Latinsky", desc: "Napiš latinský název.", lvl: 4, col: "rose"},
+  both:   {icon: "🎓", title: "Jako ve škole", desc: "Napiš latinsky i česky.", lvl: 5, col: "green"}
+};
+const MODE_PREVIEW = {
+  flip: `<div class="pv pv-flip"><span class="pcard q">?</span><span class="parr">↻</span><span class="pcard a"><i>Tagetes erecta</i>aksamitník</span></div>`,
+  choice: `<div class="pv pv-choice"><span>Zinnia</span><span class="ok">Tagetes ✓</span><span>Salvia</span><span>Petunia</span></div>`,
+  cz: `<div class="pv pv-in"><span class="pin">aksamitník vzpřímený<b>|</b></span></div>`,
+  lat: `<div class="pv pv-in"><span class="pin">Tagetes erecta<b>|</b></span></div>`,
+  both: `<div class="pv pv-in two"><span class="pin">Tagetes erecta<b>|</b></span><span class="pin">aksamitník vzpřímený</span></div>`
+};
+const LVL = ["", "Lehké", "Lehké", "Střední", "Těžší", "Nejtěžší"];
+function modeTile([k]) {
+  const m = MODE_INFO[k], on = k === mode;
+  return `<button class="mtile c-${m.col} ${on ? "on" : ""}" data-m="${k}" aria-pressed="${on}">
+    <div class="mhead">${MODE_PREVIEW[k]}</div>
+    <div class="tb"><span class="chk">${on ? "✓" : ""}</span><div class="t">${m.title}</div><div class="n">${m.desc}</div>
+      <div class="lvl"><span class="dots">${[1,2,3,4,5].map(i => `<i class="${i <= m.lvl ? "f" : ""}"></i>`).join("")}</span>${LVL[m.lvl]}</div></div>
+  </button>`;
+}
+function actPreview(kind) {
+  const pics = plantsOf(selected.length ? selected : Object.keys(SETS)).map(p => p.img);
+  const k = selected.reduce((n, id) => n + known(id), 0), tot = selected.reduce((n, id) => n + SETS[id].plants.length, 0) || 1;
+  if (kind === "atlas") return `<div class="pv pv-atlas">${pics.slice(0, 4).map(i => `<span style="background-image:url('${i}')"></span>`).join("")}</div>`;
+  if (kind === "go") return `<div class="pv pv-go"><span class="ph" style="background-image:url('${pics[0]}')"></span><span class="gi"><b>Karta 1 / ${tot}</b><span class="pb"><i style="width:${Math.max(8, k / tot * 100)}%"></i></span><small>Umíš ${k} z ${tot}</small></span></div>`;
+  if (kind === "test") return `<div class="pv pv-test"><span class="gr">1</span><span class="gi"><b>18 / 20</b><small>90 % · známka 1</small></span></div>`;
+  return `<div class="pv pv-mix">${Object.values(SETS).map((s, i) => `<span style="background-image:url('${s.cover}');transform:rotate(${(i - 1) * 9}deg)"></span>`).join("")}</div>`;
+}
+function actTile(id, kind, title, count, desc, disabled) {
+  return `<button class="mtile atile2 a-${kind}" id="${id}" ${disabled ? "disabled" : ""}>
+    <div class="mhead">${actPreview(kind)}</div>
+    <div class="tb"><div class="t">${title} <em>${count}</em></div><div class="n">${disabled ? "nejdřív vyber sadu" : desc}</div></div>
+  </button>`;
+}
 function modesHtml() {
   return `<div class="modes" id="modes">${MODES.map(([k, t]) => `<button data-m="${k}" class="${k === mode ? "on" : ""}">${t}</button>`).join("")}</div>`;
 }
