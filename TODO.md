@@ -10,24 +10,24 @@ Pracovní větev: `vylepseni`. Na webu (bocrew.com) běží jen `main`, takže z
 
 ## Obsah
 - [x] Letničky č. 2 – přidat druhou sadu z PDF, přepínač sad 1 / 2
-- [ ] Patička s autorstvím (až paní učitelka Šebestíková odpoví na e-mail) – např. „Fotografie a obsah: Ing. Miluše Šebestíková, ČZA Mělník“
+- [ ] Patička s autorstvím materiálů (po souhlasu autorky)
 
 ## Nápady
 - [ ] Ikona a fullscreen pro iPhone (Přidat na plochu)
 - [ ] (sem doplňovat další postřehy z používání)
 
 ## Verze pro celou školu (ČZA Mělník)
-- [ ] Nejdřív souhlas Ing. Šebestíkové (e-mail v Gmailu – Koncepty), pak oslovit vedení (ředitelka Ing. Anna Richterová, richterova@zas-me.cz)
+- [ ] Nejdřív souhlas autorky materiálů, pak oslovit vedení školy
 - [x] Úvodní stránka s výběrem oblastí a sad, např.:
   - Letničky → sada 1, sada 2, sada 3…
   - (další oblasti podle materiálů učitelů: trvalky, dřeviny, pokojové rostliny…)
 - [x] Struktura souborů po sadách: `img/letnicky-1/`, `img/letnicky-2/` … + data sad mimo index.html (např. `data/letnicky-1.json`)
 - [x] Režim „mix“ – procvičit náhodně napříč vybranými sadami (příprava na test)
 - [ ] Patička s autorstvím materiálů a kontaktem
-- [ ] Rozvrhnout oblasti a sady (David navrhne)
+- [ ] Rozvrhnout oblasti a sady
 - [x] Návrh úvodní stránky: oblasti pod sebou, uvnitř dlaždice se sadami (neexistující sady čárkovaně „připravuje se“), tlačítka „Procvičit sadu“ a „Mix – před testem“, patička s autorstvím
 - [x] Ukazatel pokroku u každé sady (např. 75 % = 24 z 32 správně) – ukládat jen v prohlížeči studenta (localStorage), bez registrace
-  - zatím zobrazeno: nejlepší výsledek + poslední pokus (k ověření s Ellou / studenty)
+  - zatím zobrazeno: nejlepší výsledek + poslední pokus (k ověření se studenty)
 
 ## Hotovo ve větvi vylepseni (k otestování)
 - Fotky skládané jen z vlastních obrázků rostliny (bez proužků sousedních fotek)
