@@ -256,7 +256,7 @@ function tile(s) {
   const on = selected.includes(s.id), pr = progress[s.id], k = known(s.id), n = s.plants.length;
   const extra = [pr ? `naposledy ${pr.last} %` : "", pr && pr.grade ? `test: ${pr.grade}` : ""].filter(Boolean).join(" · ");
   return `<button class="tile ${on ? "on" : ""}" data-id="${s.id}" aria-pressed="${on}">
-    <div class="cover" style="background-image:url('${s.cover}')"><span class="chk">${on ? "✓" : ""}</span>${s.note ? `<span class="badge">${esc(s.note)}</span>` : ""}</div>
+    <div class="cover" style="background-image:url('${s.cover}')"><span class="chk">${on ? "✓" : ""}</span></div>
     <div class="tb">
       <div class="t">${esc(s.title)}</div>
       <div class="n">${n} druhů</div>

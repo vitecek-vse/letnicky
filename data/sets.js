@@ -370,7 +370,7 @@ window.AREAS = [
     "id": "letnicky-3",
     "title": "Letničky č. 3",
     "short": "Letničky č. 3",
-    "note": "náhradní",
+    "note": "",
     "cover": "img/covers/letnicky-3.jpg",
     "plants": [
      {
