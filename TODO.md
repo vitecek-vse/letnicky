@@ -66,3 +66,6 @@ Pracovní větev: `vylepseni`. Na webu (bocrew.com) běží jen `main`, takže z
 ## Verze 1.7 (ve větvi vylepseni)
 - [x] Sady pojmenované jako v PDF: Letničky č. 1, 2, 3
 - [x] Úvodní fotka na každé dlaždici sady (`cover` v data/sets.js)
+
+## Verze 1.8 (ve větvi vylepseni)
+- [x] Sekce 2 a 3 jako dlaždice ve stylu sekce 1 (inspirace Duolingo): barevné záhlaví s ikonou, obtížnost 1–5, „zamáčknutí“ při stisku

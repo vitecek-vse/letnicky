@@ -120,6 +120,31 @@
   .acard .ab{font-size:12px;color:var(--green);padding:2px 10px 8px;min-height:18px}
   .grade{width:72px;height:72px;margin:0 auto 10px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:38px;font-weight:700;color:#fff;background:var(--green)}
   .grade.g3{background:var(--amber)} .grade.g4,.grade.g5{background:var(--red)}
+  .mtiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+  .mtile{position:relative;background:#fff;border:2px solid var(--line);border-bottom-width:4px;border-radius:16px;padding:0;overflow:hidden;text-align:left;cursor:pointer;font:inherit;color:inherit;transition:transform .1s}
+  .mtile:active{transform:translateY(2px);border-bottom-width:2px}
+  .mtile .mhead{position:relative;height:64px;display:flex;align-items:center;justify-content:center}
+  .mtile .micon{font-size:32px;line-height:1}
+  .mtile .chk{position:absolute;top:8px;right:8px;width:24px;height:24px;border-radius:50%;border:2px solid rgba(0,0,0,.15);background:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;color:#fff}
+  .mtile.on{border-color:var(--green);box-shadow:0 4px 14px rgba(63,125,58,.18)}
+  .mtile.on .chk{background:var(--green);border-color:var(--green)}
+  .mtile .tb{padding:10px 12px 12px}
+  .mtile .t{font-size:16px;font-weight:700}
+  .mtile .n{font-size:13px;color:var(--muted);margin-top:2px;min-height:34px}
+  .lvl{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted);margin-top:6px}
+  .dots{display:inline-flex;gap:3px} .dots i{width:8px;height:8px;border-radius:2px;background:var(--line)} .dots i.f{background:var(--green)}
+  .c-blue .mhead{background:#e3f1fc} .c-violet .mhead{background:#efe7fc} .c-amber .mhead{background:#fdf0d8} .c-rose .mhead{background:#fce4e4} .c-green .mhead{background:#e3f2e1}
+  .atiles{display:grid;gap:10px}
+  .atile{display:flex;align-items:center;gap:12px;width:100%;background:#fff;border:2px solid var(--line);border-bottom-width:4px;border-radius:16px;padding:12px 14px;font:inherit;color:var(--ink);text-align:left;cursor:pointer;transition:transform .1s}
+  .atile:active:not(:disabled){transform:translateY(2px);border-bottom-width:2px}
+  .atile:disabled{opacity:.5;cursor:default}
+  .atile .aicon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;flex:none;background:var(--photo)}
+  .atile .atext{flex:1;display:flex;flex-direction:column}
+  .atile b{font-size:17px} .atile em{font-style:normal;font-weight:600;font-size:13px;color:var(--muted);margin-left:4px}
+  .atile small{font-size:13px;color:var(--muted);margin-top:1px}
+  .atile .arrow{font-size:26px;color:var(--muted);line-height:1}
+  .a-go{background:var(--green);border-color:#2f6a2b;color:#fff} .a-go small,.a-go em,.a-go .arrow{color:rgba(255,255,255,.85)} .a-go .aicon{background:rgba(255,255,255,.2)}
+  .a-test .aicon{background:#fdf0d8} .a-atlas .aicon{background:#e3f1fc} .a-mix .aicon{background:#efe7fc}
 </style>
 </head>
 <body>
@@ -157,7 +182,7 @@
 <script src="data/sets.js"></script>
 <script>
 // ---------- verze ----------
-const VERSION = "1.7", VERSION_DATE = "14. 11. 2026";
+const VERSION = "1.8", VERSION_DATE = "14. 11. 2026";
 const LIVE = /(^|\.)bocrew\.com$/.test(location.hostname);
 document.getElementById("ver").textContent = "Verze " + VERSION + " · " + VERSION_DATE + (LIVE ? "" : " · testovací náhled");
 
@@ -231,14 +256,13 @@ function renderHome() {
     ${AREAS.map(a => `<div class="area"><h2>${esc(a.name)}</h2><div class="tiles">${a.sets.map(tile).join("")}</div></div>`).join("")}
     <div class="selhelp">${selHelp(total)}</div>
     <div class="step"><span>2</span>Vyber, jak se chceš učit</div>
-    ${modesHtml()}
-    <div class="modehelp" id="modehelp">${MODE_HELP[mode]}</div>
+    <div class="mtiles">${MODES.map(modeTile).join("")}</div>
     <div class="step"><span>3</span>Start</div>
-    <div class="grid2">
-      <button class="btn sec" id="bAtlas" ${total ? "" : "disabled"}>Atlas rostlin (${total})<small>jen koukat, nic se nezkouší</small></button>
-      <button class="btn" id="bStart" ${total ? "" : "disabled"}>${total ? `Procvičit (${total})` : "Vyber sadu"}<small>nejdřív to, co ještě neumíš</small></button>
-      <button class="btn amber" id="bTest" ${total ? "" : "disabled"}>Test (${Math.min(20, total)})<small>max. 20 karet + známka</small></button>
-      <button class="btn sec" id="bMix">Mix (${all})<small>všechny sady najednou</small></button>
+    <div class="atiles">
+      ${actTile("bAtlas", "📖", "Atlas", total, "jen koukat, nic se nezkouší", "atlas", !total)}
+      ${actTile("bStart", "▶️", "Procvičit", total, "nejdřív to, co ještě neumíš", "go", !total)}
+      ${actTile("bTest", "🏆", "Test", Math.min(20, total), "max. 20 karet + známka", "test", !total)}
+      ${actTile("bMix", "🔀", "Mix", all, "všechny sady najednou", "mix", false)}
     </div>
     `;
   document.querySelectorAll(".tile").forEach(t => t.onclick = () => {
@@ -246,7 +270,7 @@ function renderHome() {
     selected = selected.includes(id) ? selected.filter(x => x !== id) : [...selected, id];
     store.set("selected-v1", selected); renderHome();
   });
-  bindModes(renderHome);
+  document.querySelectorAll(".mtile").forEach(t => t.onclick = () => { mode = t.dataset.m; store.set("mode-v1", mode); renderHome(); });
   $("bStart").onclick = () => start({ids: selected, kind: "practice"});
   $("bTest").onclick = () => start({ids: selected, kind: "test"});
   $("bMix").onclick = () => start({ids: Object.keys(SETS), kind: "practice"});
@@ -278,6 +302,27 @@ function selHelp(total) {
   return `✅ Vybráno: ${names} · ${total} rostlin` + (selected.length === 1 ? `<br><span class="tip">Tip: klepni i na další sadu a uč se víc najednou.</span>` : "");
 }
 const MODES = [["flip","Bez psaní (jen otočit)"],["choice","Výběr ze 4"],["cz","Jen česky"],["lat","Jen latinsky"],["both","Latinsky + česky"]];
+const MODE_INFO = {
+  flip:   {icon: "👀", title: "Otoč kartu", desc: "Koukni, vzpomeň si, otoč. Nic nepíšeš.", lvl: 1, col: "blue"},
+  choice: {icon: "👆", title: "Výběr ze 4", desc: "Klepni na správný název.", lvl: 2, col: "violet"},
+  cz:     {icon: "✍️", title: "Česky", desc: "Napiš český název.", lvl: 3, col: "amber"},
+  lat:    {icon: "🔤", title: "Latinsky", desc: "Napiš latinský název.", lvl: 4, col: "rose"},
+  both:   {icon: "🎓", title: "Jako ve škole", desc: "Napiš latinsky i česky.", lvl: 5, col: "green"}
+};
+const LVL = ["", "Lehké", "Lehké", "Střední", "Těžší", "Nejtěžší"];
+function modeTile([k]) {
+  const m = MODE_INFO[k], on = k === mode;
+  return `<button class="mtile c-${m.col} ${on ? "on" : ""}" data-m="${k}" aria-pressed="${on}">
+    <div class="mhead"><span class="micon">${m.icon}</span><span class="chk">${on ? "✓" : ""}</span></div>
+    <div class="tb"><div class="t">${m.title}</div><div class="n">${m.desc}</div>
+      <div class="lvl"><span class="dots">${[1,2,3,4,5].map(i => `<i class="${i <= m.lvl ? "f" : ""}"></i>`).join("")}</span>${LVL[m.lvl]}</div></div>
+  </button>`;
+}
+function actTile(id, icon, title, count, desc, kind, disabled) {
+  return `<button class="atile a-${kind}" id="${id}" ${disabled ? "disabled" : ""}>
+    <span class="aicon">${icon}</span><span class="atext"><b>${title}${count ? ` <em>${count}</em>` : ""}</b><small>${disabled ? "nejdřív vyber sadu" : desc}</small></span><span class="arrow">›</span>
+  </button>`;
+}
 function modesHtml() {
   return `<div class="modes" id="modes">${MODES.map(([k, t]) => `<button data-m="${k}" class="${k === mode ? "on" : ""}">${t}</button>`).join("")}</div>`;
 }
