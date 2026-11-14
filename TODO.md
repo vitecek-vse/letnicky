@@ -38,3 +38,19 @@ Pracovní větev: `vylepseni`. Na webu (bocrew.com) běží jen `main`, takže z
 - Po změně fotek/dat/index.html spustit `python3 tools/build-sw.py` (aktualizuje offline cache)
 - Panel „O aplikaci“ (dole na stránce) s verzí – při každém vydání zvýšit `VERSION` a `VERSION_DATE` v index.html a spustit `python3 tools/build-sw.py`
   - 1.0 první verze (Letničky č. 1) · 1.1 výběr sad, Letničky č. 2 a 3 · 1.2 iPhone (ikona, offline), panel O aplikaci
+
+## Verze 1.3 (ve větvi vylepseni)
+- [x] Pořadí režimů: Bez psaní → Jen česky → Jen latinsky → Latinsky + česky; nový uživatel začíná „Bez psaní“
+- [x] Počet návštěv v „O aplikaci“ (GoatCounter TOTAL.json) – nutné zapnout v GoatCounter → Settings → „Allow adding visitor counts on your website“
+
+## Verze 1.4 (ve větvi vylepseni)
+- [x] Chytré opakování: rostliny, které student neumí, se vracejí častěji (jednoduchý „Leitner“ systém), u sady „Umíš X z Y“
+- [x] Režim „Test“: 20 náhodných karet bez nápověd a bez „Uznat jako správně“, na konci známka jako ve škole
+- [x] Výběr ze 4 možností (pro začátečníky) – jednodušší než psaní
+- [x] Zvětšení fotky klepnutím (detail květu/listu)
+- [x] Nápověda „první písmeno“ před odhalením odpovědi
+- [x] Seznam rostlin jako atlas (prohlížení s fotkami bez zkoušení)
+- [x] Sdílení výsledku (např. „Sada 1: 30/32“) – zpráva do třídního chatu
+- [x] Přístupnost: větší písmo, kontrast, ovládání klávesnicí
+  - poznámky k 1.4: „umíš“ = aspoň 2× po sobě správně (s nápovědou se nepočítá); test = max. 20 karet, režim Bez psaní se v testu mění na Latinsky + česky, „skoro“ se uznává
+  - známky: ≥90 % = 1, ≥75 % = 2, ≥50 % = 3, ≥30 % = 4, jinak 5 (případně upravit podle školy)
