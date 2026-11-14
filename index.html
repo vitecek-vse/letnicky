@@ -3,216 +3,280 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Letničky č. 1 – poznávačka</title>
+<meta name="theme-color" content="#3f7d3a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Poznávačka">
+<title>Poznávačka rostlin – ČZA Mělník</title>
 <style>
-  :root{--bg:#f6f5ef;--card:#fff;--ink:#22301f;--muted:#6b7566;--green:#3f7d3a;--red:#b5433a;--amber:#b7862b;--line:#e1e3d8}
+  :root{--bg:#f6f5ef;--card:#fff;--ink:#22301f;--muted:#6b7566;--green:#3f7d3a;--green-bg:#e8f2e5;--red:#b5433a;--amber:#b7862b;--line:#e1e3d8;--photo:#eef0e8}
   *{box-sizing:border-box}
   body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--ink)}
   .wrap{max-width:760px;margin:0 auto;padding:16px}
-  header{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;justify-content:space-between;margin-bottom:12px}
-  h1{font-size:20px;margin:0}
-  .stats{font-size:14px;color:var(--muted)}
-  .stats b{color:var(--ink)}
-  .modes{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+  h1{font-size:21px;margin:0}
+  .sub{color:var(--muted);font-size:14px;margin:4px 0 18px}
+  .area{margin-bottom:18px}
+  .area h2{font-size:14px;font-weight:600;color:var(--muted);margin:0 0 8px;text-transform:none}
+  .tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+  .tile{position:relative;background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px;text-align:left;cursor:pointer;font:inherit;color:inherit}
+  .tile.on{border:2px solid var(--green);background:var(--green-bg);padding:11px}
+  .tile .t{font-size:16px;font-weight:600}
+  .tile .n{font-size:13px;color:var(--muted);margin-top:2px}
+  .tile .p{font-size:13px;margin-top:8px;color:var(--green);font-weight:600}
+  .tile .p.none{color:var(--muted);font-weight:400}
+  .tile .chk{position:absolute;top:10px;right:10px;width:20px;height:20px;border-radius:50%;border:1.5px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:13px;color:#fff}
+  .tile.on .chk{background:var(--green);border-color:var(--green)}
+  .bar2{height:4px;background:var(--line);border-radius:2px;margin-top:4px;overflow:hidden}
+  .bar2 div{height:100%;background:var(--green)}
+  .modes{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 12px}
   .modes button{border:1px solid var(--line);background:#fff;border-radius:999px;padding:6px 12px;font-size:14px;cursor:pointer;color:var(--ink)}
   .modes button.on{background:var(--green);color:#fff;border-color:var(--green)}
+  .label{font-size:13px;color:var(--muted);margin:14px 0 4px}
+  .row{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+  .btn{flex:1;min-width:140px;border:0;border-radius:10px;padding:12px 14px;font-size:16px;cursor:pointer;background:var(--green);color:#fff}
+  .btn.sec{background:#e8ebe1;color:var(--ink)}
+  .btn.bad{background:var(--red)}
+  .btn:disabled{opacity:.5;cursor:default}
+  .top{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px;flex-wrap:wrap}
+  .back{border:0;background:none;color:var(--green);font-size:15px;cursor:pointer;padding:4px 0}
+  .stats{font-size:14px;color:var(--muted)}
+  .stats b{color:var(--ink)}
   .card{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,.04)}
-  .photo{background:#eef0e8;display:flex;align-items:center;justify-content:center;height:min(52vh,440px)}
+  .photo{background:var(--photo);display:flex;align-items:center;justify-content:center;height:min(40vh,420px)}
   .photo img{max-width:100%;max-height:100%;object-fit:contain;display:block}
   .body{padding:14px 16px 16px}
-  .num{font-size:13px;color:var(--muted);margin-bottom:8px}
-  label{display:block;font-size:13px;color:var(--muted);margin:8px 0 4px}
+  .num{font-size:13px;color:var(--muted);margin-bottom:6px}
+  .body label{display:block;font-size:13px;color:var(--muted);margin:8px 0 4px}
   input{width:100%;font-size:17px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:#fcfcf9;color:var(--ink)}
   input:focus{outline:2px solid #9cc497;border-color:#9cc497}
   input.ok{border-color:var(--green);background:#eef7ec}
   input.bad{border-color:var(--red);background:#fbefed}
   input.near{border-color:var(--amber);background:#fbf5e8}
-  .row{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
-  .btn{flex:1;min-width:120px;border:0;border-radius:10px;padding:11px 14px;font-size:16px;cursor:pointer;background:var(--green);color:#fff}
-  .btn.sec{background:#e8ebe1;color:var(--ink)}
-  .btn.warn{background:var(--amber)}
-  .btn.bad{background:var(--red)}
   .answer{margin-top:14px;padding:12px;border-radius:10px;background:#f3f5ee;display:none}
   .answer .lat{font-style:italic;font-size:18px;font-weight:600}
   .answer .cz{font-size:17px;margin-top:2px}
+  .answer .src{font-size:12px;color:var(--muted);margin-top:6px}
   .verdict{font-weight:600;margin-bottom:6px}
   .verdict.ok{color:var(--green)} .verdict.bad{color:var(--red)} .verdict.near{color:var(--amber)}
   .hint{font-size:13px;color:var(--muted);margin-top:8px}
-  .end{text-align:center;padding:30px 16px}
-  .end h2{margin:0 0 8px}
   .progress{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin-bottom:12px}
   .progress div{height:100%;background:var(--green);width:0;transition:width .3s}
+  .end{text-align:center;padding:26px 16px}
+  .end h2{margin:0 0 8px}
+  .end table{margin:10px auto 0;border-collapse:collapse;font-size:14px}
+  .end td{padding:3px 8px;text-align:left}
   details{margin-top:16px;font-size:14px}
   details table{width:100%;border-collapse:collapse;margin-top:8px}
   details td{padding:4px 6px;border-bottom:1px solid var(--line)}
   details td:first-child{font-style:italic}
+  footer{margin:28px 0 8px;font-size:12px;color:var(--muted);text-align:center;line-height:1.6}
+  footer a{color:var(--green)}
 </style>
 </head>
 <body>
-<div class="wrap">
-  <header>
-    <h1>🌼 Letničky č. 1 – poznávačka</h1>
-    <div class="stats">Správně <b id="sOk">0</b> · Špatně <b id="sBad">0</b> · Zbývá <b id="sLeft">0</b></div>
-  </header>
-  <div class="modes" id="modes">
-    <button data-m="both" class="on">Latinsky + česky</button>
-    <button data-m="lat">Jen latinsky</button>
-    <button data-m="cz">Jen česky</button>
-    <button data-m="flip">Bez psaní (jen otočit)</button>
-  </div>
-  <div class="progress"><div id="bar"></div></div>
-  <div id="app"></div>
-  <details>
-    <summary>Seznam všech 32 druhů</summary>
-    <table id="list"></table>
-  </details>
-</div>
+<div class="wrap" id="app"></div>
+<div class="wrap"><footer>Fotografie a názvy rostlin: studijní materiály <a href="https://www.zas-me.cz/" target="_blank" rel="noopener">ČZA Mělník</a></footer></div>
+<script src="data/sets.js"></script>
 <script>
-const P=[
- ["Ageratum houstonianum","nestařec mexický"],
- ["Amaranthus caudatus","laskavec ocasatý"],
- ["Antirrhinum majus","hledík větší"],
- ["Begonia semperflorens – hybridy","begonie stálekvetoucí"],
- ["Calendula officinalis","měsíček lékařský"],
- ["Callistephus chinensis","astra čínská"],
- ["Celosia argentea f. cristata","nevadlec stříbrný forma hřebenitá"],
- ["Celosia argentea f. plumosa","nevadlec stříbrný forma latnatá"],
- ["Coreopsis grandiflora","krásnoočko velkokvěté"],
- ["Cosmos bipinnatus","krásenka zpeřená"],
- ["Dahlia hortensis (D. variabilis)","jiřinka zahradní (j. proměnlivá)"],
- ["Dianthus chinensis","hvozdík čínský"],
- ["Eschscholzia californica","sluncovka kalifornská"],
- ["Gazania rigens (G. splendens)","gazánie zářivá"],
- ["Helichrysum bracteatum (Xerochrysum b.)","smil listenatý"],
- ["Chrysanthemum segetum","kopretina osenní"],
- ["Impatiens walleriana (I. holstii)","netýkavka turecká (n. sultánská)"],
- ["Lagurus ovatus","zaječí ocásek vejčitý"],
- ["Lathyrus odoratus","hrachor vonný"],
- ["Limonium sinuatum","limonka chobotnatá"],
- ["Lobelia erinus","lobelka drobná"],
- ["Lobularia maritima (Alyssum maritimum)","tařicovka přímořská"],
- ["Lonas annua","břinek roční"],
- ["Matthiola incana","fiala šedivá"],
- ["Petunia × hybrida (P. × atkinsiana)","petunie zkřížená (p. zahradní)"],
- ["Rudbeckia hirta","třapatka srstnatá"],
- ["Salvia splendens","šalvěj zářivá"],
- ["Tagetes erecta","aksamitník vzpřímený"],
- ["Tagetes patula","aksamitník rozkladitý"],
- ["Tropaeolum majus","lichořeřišnice větší"],
- ["Verbena – hybridy","sporýš zkřížený"],
- ["Zinnia elegans","ostálka lepá"]
-].map((p,i)=>({lat:p[0],cz:p[1],img:"img/"+String(i+1).padStart(2,"0")+".jpg"}));
+// ---------- data ----------
+const SETS = {}; AREAS.forEach(a => a.sets.forEach(s => { s.area = a.name; SETS[s.id] = s; }));
+const $ = id => document.getElementById(id);
+const esc = s => s.replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const shuffle = a => { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
 
-const norm=s=>s.normalize("NFD").replace(/[̀-ͯ]/g,"").toLowerCase()
-  .replace(/[×–\-.,;:!?'"]/g," ").replace(/\b(x|f|forma|hybridy|hybrid|var|subsp)\b/g," ").replace(/\s+/g," ").trim();
+// ---------- storage (jen v prohlížeči studenta) ----------
+const store = {
+  get(k, d) { try { const v = localStorage.getItem("bocrew-" + k); return v ? JSON.parse(v) : d; } catch (e) { return d; } },
+  set(k, v) { try { localStorage.setItem("bocrew-" + k, JSON.stringify(v)); } catch (e) {} }
+};
+let progress = store.get("progress-v1", {});           // {setId: {last, best, date}}
+let selected = store.get("selected-v1", ["letnicky-1"]).filter(id => SETS[id]);
+let mode = store.get("mode-v1", "both");
 
-// build accepted variants: main name + synonym in parentheses (abbreviated genus expanded)
-function variants(name){
-  const out=new Set();
-  const m=name.match(/^(.*?)\s*\((.*)\)\s*$/);
-  const main=m?m[1]:name; out.add(norm(main));
-  if(m){
-    let syn=m[2];
-    const w=main.trim().split(/\s+/);
-    // "D. variabilis" -> "Dahlia variabilis"; "Xerochrysum b." -> "Xerochrysum bracteatum"; "n. sultánská" -> "netýkavka sultánská"
-    syn=syn.replace(/^(\S+)\.\s+/,()=>w[0]+" ").replace(/\s(\S)\.$/,(a,b)=>" "+(w[1]||b));
-    out.add(norm(syn));
-    if(/×/.test(syn)) out.add(norm(syn));
+// ---------- porovnání odpovědí ----------
+const norm = s => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase()
+  .replace(/[×–\-.,;:!?'"()]/g, " ").replace(/\b(x|f|forma|hybridy|hybrid|var|subsp)\b/g, " ").replace(/\s+/g, " ").trim();
+function variants(name) {
+  const out = new Set();
+  const m = name.match(/^(.*?)\s*\((.*)\)\s*$/);
+  const main = m ? m[1] : name; out.add(norm(main)); out.add(norm(name));
+  if (m) {
+    const w = main.trim().split(/\s+/);
+    m[2].split(",").forEach(syn => {
+      syn = syn.trim()
+        .replace(/^(\S)\.\s+/, () => w[0] + " ")            // "D. variabilis" -> "Dahlia variabilis"
+        .replace(/\s(\S)\.$/, (a, b) => " " + (w[1] || b));   // "Bassia s." -> "Bassia scoparia"
+      out.add(norm(syn));
+    });
   }
-  return [...out];
+  return [...out].filter(Boolean);
 }
-function judge(input,name){
-  const v=variants(name), x=norm(input);
-  if(!x) return "bad";
-  if(v.includes(x)) return "ok";
-  // close: Levenshtein ≤ 2 on whole, or right genus/first word
-  if(v.some(t=>lev(t,x)<=2)) return "near";
-  if(v.some(t=>t.split(" ")[0]===x.split(" ")[0])) return "near";
+function lev(a, b) { const d = Array.from({length: a.length + 1}, (_, i) => [i]); for (let j = 1; j <= b.length; j++) d[0][j] = j;
+  for (let i = 1; i <= a.length; i++) for (let j = 1; j <= b.length; j++) d[i][j] = Math.min(d[i-1][j] + 1, d[i][j-1] + 1, d[i-1][j-1] + (a[i-1] === b[j-1] ? 0 : 1)); return d[a.length][b.length]; }
+function judge(input, name) {
+  const v = variants(name), x = norm(input);
+  if (!x) return "bad";
+  if (v.includes(x)) return "ok";
+  if (v.some(t => lev(t, x) <= 2)) return "near";
+  if (v.some(t => t.split(" ")[0] === x.split(" ")[0])) return "near";
   return "bad";
 }
-function lev(a,b){const d=Array.from({length:a.length+1},(_,i)=>[i]);for(let j=1;j<=b.length;j++)d[0][j]=j;
-  for(let i=1;i<=a.length;i++)for(let j=1;j<=b.length;j++)d[i][j]=Math.min(d[i-1][j]+1,d[i][j-1]+1,d[i-1][j-1]+(a[i-1]===b[j-1]?0:1));return d[a.length][b.length];}
 
-let mode="both", deck=[], idx=0, ok=0, bad=0, wrong=[], answered=false, total=0;
-const $=id=>document.getElementById(id);
-const shuffle=a=>{for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+// ---------- úvodní stránka ----------
+function renderHome() {
+  location.hash = "";
+  const total = selected.reduce((n, id) => n + SETS[id].plants.length, 0);
+  const all = Object.values(SETS).reduce((n, s) => n + s.plants.length, 0);
+  $("app").innerHTML = `
+    <h1>🌼 Poznávačka rostlin</h1>
+    <div class="sub">ČZA Mělník · vyber sady, které chceš procvičit</div>
+    ${AREAS.map(a => `<div class="area"><h2>${esc(a.name)}</h2><div class="tiles">${a.sets.map(tile).join("")}</div></div>`).join("")}
+    <div class="label">Jak procvičovat</div>
+    ${modesHtml()}
+    <div class="row">
+      <button class="btn" id="bStart" ${total ? "" : "disabled"}>${total ? `Procvičit vybrané (${total})` : "Vyber aspoň jednu sadu"}</button>
+      <button class="btn sec" id="bMix">Mix – všechno (${all})</button>
+    </div>
+    <details><summary>Seznam rostlin ve vybraných sadách</summary><table>${selected.flatMap(id => SETS[id].plants).map(p => `<tr><td>${esc(p.lat)}</td><td>${esc(p.cz)}</td></tr>`).join("")}</table></details>`;
+  document.querySelectorAll(".tile").forEach(t => t.onclick = () => {
+    const id = t.dataset.id;
+    selected = selected.includes(id) ? selected.filter(x => x !== id) : [...selected, id];
+    store.set("selected-v1", selected); renderHome();
+  });
+  bindModes(renderHome);
+  $("bStart").onclick = () => start(selected.flatMap(id => SETS[id].plants.map(p => ({...p, set: id}))), selected, true);
+  $("bMix").onclick = () => { const ids = Object.keys(SETS); start(ids.flatMap(id => SETS[id].plants.map(p => ({...p, set: id}))), ids, true); };
+}
+function tile(s) {
+  const on = selected.includes(s.id), pr = progress[s.id];
+  return `<button class="tile ${on ? "on" : ""}" data-id="${s.id}" aria-pressed="${on}">
+    <span class="chk">${on ? "✓" : ""}</span>
+    <div class="t">${esc(s.short)}</div>
+    <div class="n">${s.plants.length} druhů${s.note ? " · " + esc(s.note) : ""}</div>
+    ${pr ? `<div class="p">Nejlepší ${pr.best} % · naposledy ${pr.last} %</div><div class="bar2"><div style="width:${pr.best}%"></div></div>`
+         : `<div class="p none">Zatím neprocvičeno</div>`}
+  </button>`;
+}
+function modesHtml() {
+  const M = [["both","Latinsky + česky"],["lat","Jen latinsky"],["cz","Jen česky"],["flip","Bez psaní (jen otočit)"]];
+  return `<div class="modes" id="modes">${M.map(([k, t]) => `<button data-m="${k}" class="${k === mode ? "on" : ""}">${t}</button>`).join("")}</div>`;
+}
+function bindModes(after) {
+  $("modes").onclick = e => { const b = e.target.closest("button"); if (!b) return; mode = b.dataset.m; store.set("mode-v1", mode); after(); };
+}
 
-function start(list){deck=shuffle(list.slice());idx=0;ok=0;bad=0;wrong=[];total=deck.length;render();}
-function stats(){ $("sOk").textContent=ok;$("sBad").textContent=bad;$("sLeft").textContent=deck.length-idx;
-  $("bar").style.width=(total?(idx/total*100):0)+"%"; }
-
-function render(){
-  answered=false; stats();
-  if(idx>=deck.length) return renderEnd();
-  const p=deck[idx];
-  const needLat=mode==="both"||mode==="lat", needCz=mode==="both"||mode==="cz";
-  $("app").innerHTML=`<div class="card">
+// ---------- procvičování ----------
+let deck = [], idx = 0, ok = 0, bad = 0, wrong = [], answered = false, total = 0, sessionSets = [], saveResult = false, results = {};
+function start(list, setIds, save) {
+  deck = shuffle(list.slice()); idx = 0; ok = 0; bad = 0; wrong = []; total = deck.length;
+  sessionSets = setIds; saveResult = save; results = {};
+  setIds.forEach(id => results[id] = {ok: 0, n: 0});
+  location.hash = "procvicovani";
+  renderCard();
+}
+function head() {
+  const names = sessionSets.map(id => SETS[id].area + " – " + SETS[id].short).join(", ");
+  return `<div class="top"><button class="back" id="bBack">← Sady</button>
+    <div class="stats">Správně <b>${ok}</b> · Špatně <b>${bad}</b> · Zbývá <b>${deck.length - idx}</b></div></div>
+    <div class="sub" style="margin:-4px 0 8px">${esc(names)}</div>
+    ${modesHtml()}
+    <div class="progress"><div style="width:${total ? idx / total * 100 : 0}%"></div></div>`;
+}
+function renderCard() {
+  answered = false;
+  if (idx >= deck.length) return renderEnd();
+  const p = deck[idx];
+  const needLat = mode === "both" || mode === "lat", needCz = mode === "both" || mode === "cz";
+  $("app").innerHTML = head() + `<div class="card">
     <div class="photo"><img src="${p.img}" alt="Fotka rostliny"></div>
     <div class="body">
-      <div class="num">Karta ${idx+1} / ${deck.length}</div>
-      ${needLat?`<label for="iLat">Latinský název</label><input id="iLat" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="např. Tagetes erecta">`:""}
-      ${needCz?`<label for="iCz">Český název</label><input id="iCz" autocomplete="off" spellcheck="false" placeholder="např. aksamitník vzpřímený">`:""}
+      <div class="num">Karta ${idx + 1} / ${deck.length}</div>
+      ${needLat ? `<label for="iLat">Latinský název</label><input id="iLat" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="např. Tagetes erecta">` : ""}
+      ${needCz ? `<label for="iCz">Český název</label><input id="iCz" autocomplete="off" spellcheck="false" placeholder="např. aksamitník vzpřímený">` : ""}
       <div class="row" id="btns">
-        ${mode==="flip"?`<button class="btn" id="bShow">Ukázat název</button>`:`<button class="btn" id="bCheck">Zkontrolovat</button><button class="btn sec" id="bShow">Nevím – ukázat</button>`}
+        ${mode === "flip" ? `<button class="btn" id="bShow">Ukázat název</button>` : `<button class="btn" id="bCheck">Zkontrolovat</button><button class="btn sec" id="bShow">Nevím – ukázat</button>`}
       </div>
       <div class="answer" id="ans"></div>
-      ${mode!=="flip"?`<div class="hint">Diakritika a velká písmena se nekontrolují. Enter = zkontrolovat / další.</div>`:""}
+      ${mode !== "flip" ? `<div class="hint">Diakritika a velká písmena se nekontrolují. Enter = zkontrolovat / další.</div>` : ""}
     </div></div>`;
-  const f=$("iLat")||$("iCz"); if(f) f.focus();
-  if($("bCheck")) $("bCheck").onclick=check;
-  $("bShow").onclick=()=>reveal(mode==="flip"?null:"bad",true);
+  if (deck[idx + 1]) { const pre = new Image(); pre.src = deck[idx + 1].img; }
+  $("bBack").onclick = renderHome;
+  bindModes(renderCard);
+  const f = $("iLat") || $("iCz"); if (f && matchMedia("(pointer:fine)").matches) f.focus();
+  if ($("bCheck")) $("bCheck").onclick = check;
+  $("bShow").onclick = () => reveal(mode === "flip" ? null : "bad", true);
 }
-
-function check(){
-  if(answered) return;
-  const p=deck[idx]; let res=[];
-  for(const [id,name] of [["iLat",p.lat],["iCz",p.cz]]){
-    const el=$(id); if(!el) continue;
-    const r=judge(el.value,name); el.classList.add(r); el.readOnly=true; res.push(r);
+function check() {
+  if (answered) return;
+  const p = deck[idx], res = [];
+  for (const [id, name] of [["iLat", p.lat], ["iCz", p.cz]]) {
+    const el = $(id); if (!el) continue;
+    const r = judge(el.value, name); el.classList.add(r); el.readOnly = true; res.push(r);
   }
-  const overall=res.every(r=>r==="ok")?"ok":res.some(r=>r==="bad")?"bad":"near";
-  reveal(overall,false);
+  reveal(res.every(r => r === "ok") ? "ok" : res.some(r => r === "bad") ? "bad" : "near", false);
 }
-
-function reveal(verdict,gaveUp){
-  if(answered) return; answered=true;
-  const p=deck[idx];
-  ["iLat","iCz"].forEach(id=>{const el=$(id); if(el){el.readOnly=true; if(gaveUp) el.classList.add("bad");}});
-  const a=$("ans"); a.style.display="block";
-  const txt={ok:"✔ Správně!",bad:gaveUp?"Správný název:":"✘ Špatně",near:"≈ Skoro – zkontroluj pravopis"}[verdict]||"";
-  a.innerHTML=`${txt?`<div class="verdict ${verdict}">${txt}</div>`:""}<div class="lat">${p.lat}</div><div class="cz">${p.cz}</div>`;
-  const b=$("btns");
-  if(mode==="flip"||verdict==="near"){
-    b.innerHTML=`<button class="btn" id="bYes">Věděl/a jsem ✔</button><button class="btn bad" id="bNo">Nevěděl/a ✘</button>`;
-    $("bYes").onclick=()=>next(true); $("bNo").onclick=()=>next(false);
-  } else if(verdict==="bad"){
-    b.innerHTML=`<button class="btn" id="bNext">Další →</button><button class="btn sec" id="bOverride">Uznat jako správně</button>`;
-    $("bNext").onclick=()=>next(false); $("bOverride").onclick=()=>next(true); $("bNext").focus();
+function reveal(verdict, gaveUp) {
+  if (answered) return; answered = true;
+  const p = deck[idx];
+  ["iLat", "iCz"].forEach(id => { const el = $(id); if (el) { el.readOnly = true; if (gaveUp) el.classList.add("bad"); } });
+  const a = $("ans"); a.style.display = "block";
+  const txt = {ok: "✔ Správně!", bad: gaveUp ? "Správný název:" : "✘ Špatně", near: "≈ Skoro – zkontroluj pravopis"}[verdict] || "";
+  a.innerHTML = `${txt ? `<div class="verdict ${verdict}">${txt}</div>` : ""}<div class="lat">${esc(p.lat)}</div><div class="cz">${esc(p.cz)}</div>
+    ${sessionSets.length > 1 ? `<div class="src">${esc(SETS[p.set].area + " – " + SETS[p.set].short)}</div>` : ""}`;
+  const b = $("btns");
+  if (mode === "flip" || verdict === "near") {
+    b.innerHTML = `<button class="btn" id="bYes">Věděl/a jsem ✔</button><button class="btn bad" id="bNo">Nevěděl/a ✘</button>`;
+    $("bYes").onclick = () => next(true); $("bNo").onclick = () => next(false);
+  } else if (verdict === "bad") {
+    b.innerHTML = `<button class="btn" id="bNext">Další →</button><button class="btn sec" id="bOverride">Uznat jako správně</button>`;
+    $("bNext").onclick = () => next(false); $("bOverride").onclick = () => next(true); $("bNext").focus();
   } else {
-    b.innerHTML=`<button class="btn" id="bNext">Další →</button>`; $("bNext").onclick=()=>next(true); $("bNext").focus();
+    b.innerHTML = `<button class="btn" id="bNext">Další →</button>`; $("bNext").onclick = () => next(true); $("bNext").focus();
   }
 }
-function next(correct){ if(correct) ok++; else {bad++; wrong.push(deck[idx]);} idx++; render(); }
-
-function renderEnd(){
-  const pct=Math.round(ok/total*100);
-  $("app").innerHTML=`<div class="card end"><h2>Hotovo! ${ok} / ${total} (${pct} %)</h2>
-    <p>${wrong.length?`Špatně: ${wrong.map(w=>"<i>"+w.lat.split(" (")[0]+"</i>").join(", ")}`:"Všechno správně 🎉"}</p>
-    <div class="row">${wrong.length?`<button class="btn" id="bWrong">Procvičit jen chybné (${wrong.length})</button>`:""}<button class="btn sec" id="bAll">Znovu všech 32</button></div></div>`;
-  if($("bWrong")) $("bWrong").onclick=()=>start(wrong);
-  $("bAll").onclick=()=>start(P);
+function next(correct) {
+  const p = deck[idx], r = results[p.set];
+  if (r) { r.n++; if (correct) r.ok++; }
+  if (correct) ok++; else { bad++; wrong.push(p); }
+  idx++; renderCard();
+}
+function renderEnd() {
+  const pct = Math.round(ok / total * 100);
+  let rows = "";
+  if (saveResult) {
+    sessionSets.forEach(id => {
+      const r = results[id]; if (!r || !r.n) return;
+      const v = Math.round(r.ok / r.n * 100), old = progress[id];
+      progress[id] = {last: v, best: Math.max(v, old ? old.best : 0), date: new Date().toISOString().slice(0, 10)};
+      rows += `<tr><td>${esc(SETS[id].area + " – " + SETS[id].short)}</td><td><b>${v} %</b></td><td>(${r.ok}/${r.n})</td></tr>`;
+    });
+    store.set("progress-v1", progress);
+  }
+  $("app").innerHTML = `<div class="top"><button class="back" id="bBack">← Sady</button></div>
+    <div class="card end"><h2>Hotovo! ${ok} / ${total} (${pct} %)</h2>
+    ${rows && sessionSets.length > 1 ? `<table>${rows}</table>` : ""}
+    <p>${wrong.length ? `Špatně: ${wrong.map(w => "<i>" + esc(w.lat.split(" (")[0]) + "</i>").join(", ")}` : "Všechno správně 🎉"}</p>
+    ${!saveResult ? `<p class="hint">Opakování chybných se do pokroku sady nepočítá.</p>` : ""}
+    <div class="row">${wrong.length ? `<button class="btn" id="bWrong">Procvičit jen chybné (${wrong.length})</button>` : ""}
+      <button class="btn sec" id="bAgain">Znovu celé</button></div></div>`;
+  $("bBack").onclick = renderHome;
+  if ($("bWrong")) $("bWrong").onclick = () => start(wrong, sessionSets, false);
+  const again = sessionSets.slice();
+  $("bAgain").onclick = () => start(again.flatMap(id => SETS[id].plants.map(p => ({...p, set: id}))), again, true);
 }
 
-document.addEventListener("keydown",e=>{
-  if(e.key!=="Enter") return;
-  if(!answered){ if($("bCheck")) {e.preventDefault();check();} }
-  else if($("bNext")){e.preventDefault();$("bNext").click();}
+document.addEventListener("keydown", e => {
+  if (e.key !== "Enter") return;
+  if (!answered) { if ($("bCheck")) { e.preventDefault(); check(); } }
+  else if ($("bNext")) { e.preventDefault(); $("bNext").click(); }
 });
-$("modes").onclick=e=>{const b=e.target.closest("button"); if(!b) return;
-  mode=b.dataset.m; document.querySelectorAll("#modes button").forEach(x=>x.classList.toggle("on",x===b)); start(P);};
-$("list").innerHTML=P.map(p=>`<tr><td>${p.lat}</td><td>${p.cz}</td></tr>`).join("");
-start(P);
+window.addEventListener("hashchange", () => { if (location.hash !== "#procvicovani" && $("bBack")) renderHome(); });
+renderHome();
+
+// počítadlo návštěv jen na ostrém webu
+if (/(^|\.)bocrew\.com$/.test(location.hostname)) {
+  const g = document.createElement("script"); g.async = true; g.src = "https://gc.zgo.at/count.js";
+  g.dataset.goatcounter = "https://bocrew.goatcounter.com/count"; document.body.appendChild(g);
+}
 </script>
-<script data-goatcounter="https://bocrew.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </body>
 </html>
