@@ -108,15 +108,22 @@
       <li><b>Ochrana soukromí od návrhu</b> (privacy by design, zásada minimalizace údajů podle GDPR) – web zpracovává jen to, co je nutné pro jeho fungování.</li>
       <li><b>Otevřený zdrojový kód</b> – kdokoli si může ověřit, co web dělá: <a href="https://github.com/vitecek-vse/letnicky" target="_blank" rel="noopener">GitHub</a>.</li>
     </ul>
+    <p class="ver" id="visits"></p>
     <p class="ver" id="ver"></p>
     </div>
   </details></footer></div>
 <script src="data/sets.js"></script>
 <script>
 // ---------- verze ----------
-const VERSION = "1.2", VERSION_DATE = "14. 11. 2026";
+const VERSION = "1.3", VERSION_DATE = "14. 11. 2026";
 const LIVE = /(^|\.)bocrew\.com$/.test(location.hostname);
 document.getElementById("ver").textContent = "Verze " + VERSION + " · " + VERSION_DATE + (LIVE ? "" : " · testovací náhled");
+// počet návštěv (GoatCounter – veřejné celkové číslo, bez osobních údajů)
+if (LIVE) fetch("https://bocrew.goatcounter.com/counter/TOTAL.json")
+  .then(r => r.ok ? r.json() : null)
+  .then(d => { if (d && d.count) document.getElementById("visits").textContent = "Návštěv celkem: " + d.count.replace(/[,\u202f]/g, "\u00a0"); })
+  .catch(() => {});
+else document.getElementById("visits").textContent = "Počet návštěv se zobrazí jen na bocrew.com";
 
 // ---------- data ----------
 const SETS = {}; AREAS.forEach(a => a.sets.forEach(s => { s.area = a.name; SETS[s.id] = s; }));
@@ -131,7 +138,7 @@ const store = {
 };
 let progress = store.get("progress-v1", {});           // {setId: {last, best, date}}
 let selected = store.get("selected-v1", ["letnicky-1"]).filter(id => SETS[id]);
-let mode = store.get("mode-v1", "both");
+let mode = store.get("mode-v1", "flip");
 
 // ---------- porovnání odpovědí ----------
 const norm = s => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase()
@@ -198,7 +205,7 @@ function tile(s) {
   </button>`;
 }
 function modesHtml() {
-  const M = [["both","Latinsky + česky"],["lat","Jen latinsky"],["cz","Jen česky"],["flip","Bez psaní (jen otočit)"]];
+  const M = [["flip","Bez psaní (jen otočit)"],["cz","Jen česky"],["lat","Jen latinsky"],["both","Latinsky + česky"]];
   return `<div class="modes" id="modes">${M.map(([k, t]) => `<button data-m="${k}" class="${k === mode ? "on" : ""}">${t}</button>`).join("")}</div>`;
 }
 function bindModes(after) {
