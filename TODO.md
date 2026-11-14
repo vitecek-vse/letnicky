@@ -76,3 +76,4 @@ Pracovní větev: `vylepseni`. Na webu (bocrew.com) běží jen `main`, takže z
 - [x] Jen 3 hry: Pexeso (otoč kartu), Tipovačka (A–D jako v Milionáři), Jako ve škole
 - [x] Jako ve škole i Test: ½ bodu za latinský + ½ bodu za český název (0 / ½ / 1)
 - [x] Klepnutí na hru ji rovnou spustí; sekce 3 = Další možnosti (Atlas, Test, Mix)
+- [x] 2.1: sekce 3 jen Atlas a Test („Prohlédni si nebo se otestuj“), Mix nahrazen odkazem „Vybrat všechny sady“ v sekci 1

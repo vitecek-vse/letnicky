@@ -165,7 +165,8 @@
   .pcard.a i{font-weight:600;font-size:10px;margin-bottom:2px}
   .pcard.a{font-size:10px}
   .parr{font-size:16px;color:#5b8fc4}
-  .atiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+  .atiles{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .linkbtn{border:0;background:none;color:var(--green);font:inherit;font-size:14px;font-weight:600;padding:2px 2px 6px;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
   .atile2 .t em{font-style:normal;font-weight:600;font-size:13px;color:var(--muted);margin-left:2px}
   .atile2 .n{min-height:0}
   .atile2:disabled{opacity:.5;cursor:default}
@@ -231,7 +232,7 @@
 <script src="data/sets.js"></script>
 <script>
 // ---------- verze ----------
-const VERSION = "2.0", VERSION_DATE = "14. 11. 2026";
+const VERSION = "2.1", VERSION_DATE = "14. 11. 2026";
 const LIVE = /(^|\.)bocrew\.com$/.test(location.hostname);
 document.getElementById("ver").textContent = "Verze " + VERSION + " · " + VERSION_DATE + (LIVE ? "" : " · testovací náhled");
 
@@ -304,13 +305,13 @@ function renderHome() {
     <div class="step"><span>1</span>Vyber sadu</div>
     ${AREAS.map(a => `<div class="area"><h2>${esc(a.name)}</h2><div class="tiles">${a.sets.map(tile).join("")}</div></div>`).join("")}
     <div class="selhelp">${selHelp(total)}</div>
+    ${selected.length < Object.keys(SETS).length ? `<button class="linkbtn" id="bAll">Vybrat všechny sady (${all})</button>` : ""}
     <div class="step"><span>2</span>Vyber hru – klepnutím začneš</div>
     <div class="mtiles">${MODES.map(modeTile).join("")}</div>
-    <div class="step"><span>3</span>Další možnosti</div>
+    <div class="step"><span>3</span>Prohlédni si nebo se otestuj</div>
     <div class="atiles">
       ${actTile("bAtlas", "atlas", "Atlas", total, "jen koukat, nic se nezkouší", !total)}
       ${actTile("bTest", "test", "Test", Math.min(20, total), "jako ve škole + známka", !total)}
-      ${actTile("bMix", "mix", "Mix", all, "všechny sady · " + MODE_INFO[mode].title, false)}
     </div>
     `;
   document.querySelectorAll(".tile").forEach(t => t.onclick = () => {
@@ -324,8 +325,8 @@ function renderHome() {
     start({ids: selected, kind: "practice"});
   });
   $("bTest").onclick = () => start({ids: selected, kind: "test"});
-  $("bMix").onclick = () => start({ids: Object.keys(SETS), kind: "practice"});
   $("bAtlas").onclick = renderAtlas;
+  if ($("bAll")) $("bAll").onclick = () => { selected = Object.keys(SETS); store.set("selected-v1", selected); renderHome(); };
 }
 function tile(s) {
   const on = selected.includes(s.id), pr = progress[s.id], k = known(s.id), n = s.plants.length;
@@ -350,7 +351,7 @@ const MODE_HELP = {
 function selHelp(total) {
   if (!selected.length) return "👆 Klepni na sadu, kterou se chceš učit.";
   const names = Object.keys(SETS).filter(id => selected.includes(id)).map(id => SETS[id].short).join(" + ");
-  return `✅ Vybráno: ${names} · ${total} rostlin` + (selected.length === 1 ? `<br><span class="tip">Tip: klepni i na další sadu a uč se víc najednou.</span>` : "");
+  return `✅ Vybráno: ${names} · ${total} rostlin` + (selected.length === 1 ? `<br><span class="tip">Tip: vyber víc sad a uč se je najednou.</span>` : "");
 }
 const MODES = [["flip","Pexeso"],["choice","Tipovačka"],["both","Jako ve škole"]];
 const MODE_INFO = {
