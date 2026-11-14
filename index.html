@@ -195,6 +195,12 @@
   .choice.ok .ltr{background:var(--green);color:#fff} .choice.bad .ltr{background:var(--red);color:#fff}
   .choice .ct{display:flex;flex-direction:column}
   .half{float:right;font-size:12px;color:var(--green);font-weight:600}
+  .pv-cert{justify-content:center}
+  .cert{position:relative;width:118px;height:64px;background:#fffdf6;border:1.5px solid #e2cf9a;border-radius:6px;box-shadow:0 2px 6px rgba(0,0,0,.08);transform:rotate(-3deg);display:flex;flex-direction:column;justify-content:center;padding:6px 8px;text-align:left}
+  .cert .ct1{font-size:9px;letter-spacing:.5px;text-transform:uppercase;color:#9a7b2c;font-weight:700}
+  .cert .ct2{font-size:12px;font-weight:700;color:var(--ink);margin-top:2px}
+  .cert .ct3{font-size:9px;color:var(--muted);margin-top:2px}
+  .cert .stamp{position:absolute;right:-10px;top:-10px;width:36px;height:36px;border-radius:50%;background:#c0392b;color:#fff;font-weight:800;font-size:20px;display:flex;align-items:center;justify-content:center;border:2px dashed rgba(255,255,255,.7);transform:rotate(12deg);box-shadow:0 2px 5px rgba(0,0,0,.2)}
 </style>
 </head>
 <body>
@@ -210,7 +216,7 @@
     <ul>
       <li><b>Umíš X z Y</b> – rostlinu „umíš“, když za ni aspoň 2× po sobě dostaneš celý bod. Za 0 bodů se počítání vrací na začátek. Odpověď s nápovědou se do „umíš“ nepočítá.</li>
       <li><b>Procvičování</b> – nejdřív přicházejí rostliny, které ještě neumíš. Diakritika a velká písmena se nekontrolují.</li>
-      <li><b>Jako ve škole a Test</b> – za správný latinský název ½ bodu, za správný český ½ bodu, karta tedy dá 0, ½ nebo 1 bod. Test má až 20 náhodných karet, bez nápovědy. Drobný překlep se uzná.</li>
+      <li><b>Jako ve škole a Generálka (test)</b> – za správný latinský název ½ bodu, za správný český ½ bodu, karta tedy dá 0, ½ nebo 1 bod. Test má až 20 náhodných karet, bez nápovědy. Drobný překlep se uzná.</li>
       <li><b>Známky:</b> 90 % a víc = 1 · 75–89 % = 2 · 50–74 % = 3 · 30–49 % = 4 · méně než 30 % = 5</li>
       <li>Hodnocení slouží jen pro tvou přípravu – nikam se neposílá a neovlivňuje známky ve škole.</li>
     </ul>
@@ -232,7 +238,7 @@
 <script src="data/sets.js"></script>
 <script>
 // ---------- verze ----------
-const VERSION = "2.1", VERSION_DATE = "14. 11. 2026";
+const VERSION = "2.2", VERSION_DATE = "14. 11. 2026";
 const LIVE = /(^|\.)bocrew\.com$/.test(location.hostname);
 document.getElementById("ver").textContent = "Verze " + VERSION + " · " + VERSION_DATE + (LIVE ? "" : " · testovací náhled");
 
@@ -311,7 +317,7 @@ function renderHome() {
     <div class="step"><span>3</span>Prohlédni si nebo se otestuj</div>
     <div class="atiles">
       ${actTile("bAtlas", "atlas", "Atlas", total, "jen koukat, nic se nezkouší", !total)}
-      ${actTile("bTest", "test", "Test", Math.min(20, total), "jako ve škole + známka", !total)}
+      ${actTile("bTest", "test", "Generálka", Math.min(20, total), "20 karet na ostro – zjisti, na kolik to umíš", !total)}
     </div>
     `;
   document.querySelectorAll(".tile").forEach(t => t.onclick = () => {
@@ -376,9 +382,10 @@ function modeTile([k]) {
 function actPreview(kind) {
   const pics = plantsOf(selected.length ? selected : Object.keys(SETS)).map(p => p.img);
   const k = selected.reduce((n, id) => n + known(id), 0), tot = selected.reduce((n, id) => n + SETS[id].plants.length, 0) || 1;
-  if (kind === "atlas") return `<div class="pv pv-atlas">${pics.slice(0, 4).map(i => `<span style="background-image:url('${i}')"></span>`).join("")}</div>`;
+  if (kind === "atlas") { const ids = (selected.length ? selected : Object.keys(SETS)); const fan = ids.length >= 3 ? ids.map(id => SETS[id].cover) : [pics[3], ...ids.map(id => SETS[id].cover), pics[5]].slice(0, 3);
+    return `<div class="pv pv-mix">${fan.slice(0, 3).map((c, i) => `<span style="background-image:url('${c}');transform:rotate(${(i - 1) * 9}deg)"></span>`).join("")}</div>`; }
   if (kind === "go") return `<div class="pv pv-go"><span class="ph" style="background-image:url('${pics[0]}')"></span><span class="gi"><b>Karta 1 / ${tot}</b><span class="pb"><i style="width:${Math.max(8, k / tot * 100)}%"></i></span><small>Umíš ${k} z ${tot}</small></span></div>`;
-  if (kind === "test") return `<div class="pv pv-test"><span class="gr">1</span><span class="gi"><b>18 / 20</b><small>90 % · známka 1</small></span></div>`;
+  if (kind === "test") return `<div class="pv pv-cert"><div class="cert"><span class="ct1">Poznávačka</span><span class="ct2">⭐ výborně</span><span class="stamp">1</span><span class="ct3">18 / 20 bodů</span></div></div>`;
   return `<div class="pv pv-mix">${Object.values(SETS).map((s, i) => `<span style="background-image:url('${s.cover}');transform:rotate(${(i - 1) * 9}deg)"></span>`).join("")}</div>`;
 }
 function actTile(id, kind, title, count, desc, disabled) {
@@ -422,7 +429,7 @@ function start({ids, kind, list}) {
   renderCard();
 }
 function head() {
-  const label = S.kind === "test" ? "Test · Jako ve škole" : S.kind === "wrong" ? "Opakování chybných" : MODE_INFO[S.mode].title;
+  const label = S.kind === "test" ? "Generálka · 20 karet na ostro" : S.kind === "wrong" ? "Opakování chybných" : MODE_INFO[S.mode].title;
   return `<div class="top"><button class="back" id="bBack">← Sady</button>
     <div class="stats">Body <b>${fmt(S.pts)}</b> / ${S.idx} · Zbývá <b>${S.deck.length - S.idx}</b></div></div>
     <div class="sub" style="margin:-4px 0 8px">${label} · ${esc(S.ids.map(setName).join(", "))}</div>
@@ -540,7 +547,7 @@ function renderEnd() {
   const shareText = `Poznávačka rostlin – ${S.ids.map(setName).join(", ")}: ${fmt(S.pts)}/${total} bodů (${pct} %)${test ? ", známka " + g : ""} 🌼 https://bocrew.com`;
   $("app").innerHTML = `<div class="top"><button class="back" id="bBack">← Sady</button></div>
     <div class="card end">
-    ${test ? `<div class="grade g${g}">${g}</div><h2>Test: ${fmt(S.pts)} / ${total} bodů (${pct} %)</h2>` : `<h2>Hotovo! ${fmt(S.pts)} / ${total} bodů (${pct} %)</h2>`}
+    ${test ? `<div class="grade g${g}">${g}</div><h2>Generálka: ${fmt(S.pts)} / ${total} bodů (${pct} %)</h2>` : `<h2>Hotovo! ${fmt(S.pts)} / ${total} bodů (${pct} %)</h2>`}
     ${rows && S.ids.length > 1 ? `<table>${rows}</table>` : ""}
     <p>${S.wrong.length ? `K procvičení: ${S.wrong.map(w => "<i>" + esc(mainName(w.lat)) + "</i>").join(", ")}` : "Všechno správně 🎉"}</p>
     ${!S.save ? `<p class="hint">Opakování chybných se do výsledku sady nepočítá.</p>` : ""}
