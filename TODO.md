@@ -70,3 +70,4 @@ Pracovní větev: `vylepseni`. Na webu (bocrew.com) běží jen `main`, takže z
 ## Verze 1.8 (ve větvi vylepseni)
 - [x] Sekce 2 a 3 jako dlaždice ve stylu sekce 1 (inspirace Duolingo): barevné záhlaví s ikonou, obtížnost 1–5, „zamáčknutí“ při stisku
 - [x] 1.9: místo ikon u režimů malá ukázka, co student uvidí (otočení karty, 4 možnosti, pole pro latinský / český název)
+- [x] 1.10: sekce 3 jako dlaždice s ukázkou, co následuje (atlas fotek, karta s pokrokem, známka, mix sad)
