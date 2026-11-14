@@ -54,3 +54,7 @@ Pracovní větev: `vylepseni`. Na webu (bocrew.com) běží jen `main`, takže z
 - [x] Přístupnost: větší písmo, kontrast, ovládání klávesnicí
   - poznámky k 1.4: „umíš“ = aspoň 2× po sobě správně (s nápovědou se nepočítá); test = max. 20 karet, režim Bez psaní se v testu mění na Latinsky + česky, „skoro“ se uznává
   - známky: ≥90 % = 1, ≥75 % = 2, ≥50 % = 3, ≥30 % = 4, jinak 5 (případně upravit podle školy)
+
+## Verze 1.5 (ve větvi vylepseni)
+- [x] Vysvětlení vybraného režimu srozumitelně pro studenty (mění se podle zvoleného režimu)
+- [x] Tlačítka s krátkým popisem; Atlas rostlin jako první, počty podle vybraných sad

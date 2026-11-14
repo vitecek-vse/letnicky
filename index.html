@@ -87,7 +87,9 @@
   .aboutbox p{margin:6px 0;max-width:none}
   .about .ver{font-family:ui-monospace,Menlo,monospace;font-size:11px;margin-top:12px;color:var(--muted);text-align:center}
   .grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}
-  .grid2 .btn{min-width:0}
+  .grid2 .btn{min-width:0;line-height:1.25}
+  .btn small{display:block;font-size:12px;font-weight:400;opacity:.85;margin-top:3px}
+  .modehelp{background:#fff;border:1px solid var(--line);border-left:4px solid var(--green);border-radius:0 10px 10px 0;padding:10px 12px;font-size:14px;line-height:1.45;margin:2px 0 4px}
   .btn.amber{background:#b7862b}
   .photo{position:relative;cursor:zoom-in}
   .zoomhint{position:absolute;right:8px;bottom:8px;background:rgba(255,255,255,.85);border-radius:999px;padding:2px 7px;font-size:13px}
@@ -147,7 +149,7 @@
 <script src="data/sets.js"></script>
 <script>
 // ---------- verze ----------
-const VERSION = "1.4", VERSION_DATE = "14. 11. 2026";
+const VERSION = "1.5", VERSION_DATE = "14. 11. 2026";
 const LIVE = /(^|\.)bocrew\.com$/.test(location.hostname);
 document.getElementById("ver").textContent = "Verze " + VERSION + " · " + VERSION_DATE + (LIVE ? "" : " · testovací náhled");
 // počet návštěv (GoatCounter – veřejné celkové číslo, bez osobních údajů)
@@ -226,13 +228,14 @@ function renderHome() {
     ${AREAS.map(a => `<div class="area"><h2>${esc(a.name)}</h2><div class="tiles">${a.sets.map(tile).join("")}</div></div>`).join("")}
     <div class="label">Jak procvičovat</div>
     ${modesHtml()}
+    <div class="modehelp" id="modehelp">${MODE_HELP[mode]}</div>
     <div class="grid2">
-      <button class="btn" id="bStart" ${total ? "" : "disabled"}>${total ? `Procvičit vybrané (${total})` : "Vyber aspoň jednu sadu"}</button>
-      <button class="btn amber" id="bTest" ${total ? "" : "disabled"}>Test se známkou (${Math.min(20, total)})</button>
-      <button class="btn sec" id="bMix">Mix – všechno (${all})</button>
-      <button class="btn sec" id="bAtlas" ${total ? "" : "disabled"}>Atlas rostlin</button>
+      <button class="btn sec" id="bAtlas" ${total ? "" : "disabled"}>Atlas rostlin (${total})<small>prohlédni si rostliny s názvy</small></button>
+      <button class="btn" id="bStart" ${total ? "" : "disabled"}>${total ? `Procvičit (${total})` : "Vyber sadu"}<small>nejdřív ty, které ještě neumíš</small></button>
+      <button class="btn amber" id="bTest" ${total ? "" : "disabled"}>Test (${Math.min(20, total)})<small>náhodné karty, na konci známka</small></button>
+      <button class="btn sec" id="bMix">Mix (${all})<small>všechny sady dohromady</small></button>
     </div>
-    <p class="hint">Procvičování dává přednost rostlinám, které ještě neumíš. Test: náhodné karty bez nápověd, na konci známka.</p>`;
+    ${total ? "" : `<p class="hint">Nahoře klepni na sadu, kterou se chceš učit.</p>`}`;
   document.querySelectorAll(".tile").forEach(t => t.onclick = () => {
     const id = t.dataset.id;
     selected = selected.includes(id) ? selected.filter(x => x !== id) : [...selected, id];
@@ -255,6 +258,13 @@ function tile(s) {
     ${extra ? `<div class="n" style="margin-top:4px">${extra}</div>` : ""}
   </button>`;
 }
+const MODE_HELP = {
+  flip: "<b>Bez psaní:</b> podíváš se na fotku, zkusíš si vzpomenout na název a kartu otočíš. Sám/sama pak řekneš, jestli jsi to věděl/a. Nejrychlejší způsob, jak začít.",
+  choice: "<b>Výběr ze 4:</b> k fotce dostaneš 4 názvy a klepneš na ten správný. Hodí se, když si názvy ještě nepamatuješ přesně.",
+  cz: "<b>Jen česky:</b> napíšeš český název rostliny. Háčky a čárky nevadí.",
+  lat: "<b>Jen latinsky:</b> napíšeš latinský název. Háčky, čárky ani velká písmena nevadí.",
+  both: "<b>Latinsky + česky:</b> napíšeš oba názvy – stejně jako u poznávačky ve škole."
+};
 const MODES = [["flip","Bez psaní (jen otočit)"],["choice","Výběr ze 4"],["cz","Jen česky"],["lat","Jen latinsky"],["both","Latinsky + česky"]];
 function modesHtml() {
   return `<div class="modes" id="modes">${MODES.map(([k, t]) => `<button data-m="${k}" class="${k === mode ? "on" : ""}">${t}</button>`).join("")}</div>`;
