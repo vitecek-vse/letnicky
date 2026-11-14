@@ -41,7 +41,7 @@ Pracovní větev: `vylepseni`. Na webu (bocrew.com) běží jen `main`, takže z
 
 ## Verze 1.3 (ve větvi vylepseni)
 - [x] Pořadí režimů: Bez psaní → Jen česky → Jen latinsky → Latinsky + česky; nový uživatel začíná „Bez psaní“
-- [x] Počet návštěv v „O aplikaci“ (GoatCounter TOTAL.json) – nutné zapnout v GoatCounter → Settings → „Allow adding visitor counts on your website“
+- [x] ~~Počet návštěv v „O aplikaci“~~ – zrušeno, statistiky se sledují jen interně v GoatCounteru
 
 ## Verze 1.4 (ve větvi vylepseni)
 - [x] Chytré opakování: rostliny, které student neumí, se vracejí častěji (jednoduchý „Leitner“ systém), u sady „Umíš X z Y“
