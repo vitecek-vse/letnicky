@@ -2,16 +2,22 @@
 <html lang="cs">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#3f7d3a">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Poznávačka">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="icon" type="image/png" href="icons/favicon-32.png">
+<link rel="manifest" href="manifest.webmanifest">
 <title>Poznávačka rostlin – ČZA Mělník</title>
 <style>
   :root{--bg:#f6f5ef;--card:#fff;--ink:#22301f;--muted:#6b7566;--green:#3f7d3a;--green-bg:#e8f2e5;--red:#b5433a;--amber:#b7862b;--line:#e1e3d8;--photo:#eef0e8}
   *{box-sizing:border-box}
-  body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--ink)}
+  body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--ink);padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)}
   .wrap{max-width:760px;margin:0 auto;padding:16px}
+  .offline{display:none;background:#fbf5e8;color:#7a5a17;border:1px solid #ecd9a8;border-radius:10px;padding:8px 12px;font-size:13px;margin-bottom:12px}
+  body.is-offline .offline{display:block}
   h1{font-size:21px;margin:0}
   .sub{color:var(--muted);font-size:14px;margin:4px 0 18px}
   .area{margin-bottom:18px}
@@ -70,13 +76,48 @@
   details td:first-child{font-style:italic}
   footer{margin:28px 0 8px;font-size:12px;color:var(--muted);text-align:center;line-height:1.6}
   footer a{color:var(--green)}
+  .about{margin-top:0;text-align:center}
+  .about summary{cursor:pointer;color:var(--green);display:inline-block;list-style:none}
+  .about summary::-webkit-details-marker{display:none}
+  .about p{margin:6px auto;max-width:420px}
+  .aboutbox{text-align:left;max-width:460px;margin:10px auto 0;background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 14px;font-size:13px;line-height:1.55;color:var(--ink)}
+  .aboutbox h3{font-size:14px;margin:12px 0 6px}
+  .aboutbox ul{margin:0;padding-left:18px}
+  .aboutbox li{margin:4px 0}
+  .aboutbox p{margin:6px 0;max-width:none}
+  .about .ver{font-family:ui-monospace,Menlo,monospace;font-size:11px;margin-top:12px;color:var(--muted);text-align:center}
 </style>
 </head>
 <body>
-<div class="wrap" id="app"></div>
-<div class="wrap"><footer>Fotografie a názvy rostlin: studijní materiály <a href="https://www.zas-me.cz/" target="_blank" rel="noopener">ČZA Mělník</a></footer></div>
+<div class="wrap"><div class="offline">Jsi offline – procvičuješ z uložených dat.</div></div>
+<div class="wrap" id="app" style="padding-top:0"></div>
+<div class="wrap"><footer>
+  <details class="about"><summary>O aplikaci</summary>
+    <div class="aboutbox">
+    <p>Poznávačka rostlin pro procvičování studentů České zahradnické akademie Mělník.</p>
+    <p>Fotografie a názvy rostlin: studijní materiály <a href="https://www.zas-me.cz/" target="_blank" rel="noopener">ČZA Mělník</a>.<br>
+    Vytvořeno dobrovolně a zdarma v rámci podpory školy – Ing. David Víteček, Ph.D., MBA</p>
+    <h3>Bezpečnost a soukromí</h3>
+    <ul>
+      <li><b>Bez registrace a přihlášení</b> – nezadáváš žádné osobní údaje.</li>
+      <li><b>Pokrok zůstává ve tvém telefonu</b> – ukládá se jen v prohlížeči, nikam se neodesílá. Smažeš ho vymazáním dat prohlížeče.</li>
+      <li><b>Bez cookies a bez reklam</b> – žádné sledování napříč weby.</li>
+      <li><b>Šifrované spojení HTTPS</b> s certifikátem Let's Encrypt.</li>
+      <li><b>Anonymní statistika návštěv</b> (GoatCounter) – neukládá IP adresy ani jiné osobní údaje a nepoužívá cookies.</li>
+      <li><b>Hosting GitHub Pages</b> – jako u běžného webhostingu provozovatel z bezpečnostních důvodů zaznamenává technické údaje o přístupu (např. IP adresu).</li>
+      <li><b>Ochrana soukromí od návrhu</b> (privacy by design, zásada minimalizace údajů podle GDPR) – web zpracovává jen to, co je nutné pro jeho fungování.</li>
+      <li><b>Otevřený zdrojový kód</b> – kdokoli si může ověřit, co web dělá: <a href="https://github.com/vitecek-vse/letnicky" target="_blank" rel="noopener">GitHub</a>.</li>
+    </ul>
+    <p class="ver" id="ver"></p>
+    </div>
+  </details></footer></div>
 <script src="data/sets.js"></script>
 <script>
+// ---------- verze ----------
+const VERSION = "1.2", VERSION_DATE = "14. 11. 2026";
+const LIVE = /(^|\.)bocrew\.com$/.test(location.hostname);
+document.getElementById("ver").textContent = "Verze " + VERSION + " · " + VERSION_DATE + (LIVE ? "" : " · testovací náhled");
+
 // ---------- data ----------
 const SETS = {}; AREAS.forEach(a => a.sets.forEach(s => { s.area = a.name; SETS[s.id] = s; }));
 const $ = id => document.getElementById(id);
@@ -271,6 +312,11 @@ document.addEventListener("keydown", e => {
 });
 window.addEventListener("hashchange", () => { if (location.hash !== "#procvicovani" && $("bBack")) renderHome(); });
 renderHome();
+
+// offline: uložit web do telefonu (jen na https, mimo náhledy)
+const setOnline = () => document.body.classList.toggle("is-offline", !navigator.onLine);
+addEventListener("online", setOnline); addEventListener("offline", setOnline); setOnline();
+try { if ("serviceWorker" in navigator && location.protocol === "https:" && /(^|\.)bocrew\.com$|github\.io$/.test(location.hostname)) navigator.serviceWorker.register("sw.js").catch(() => {}); } catch (e) {}
 
 // počítadlo návštěv jen na ostrém webu
 if (/(^|\.)bocrew\.com$/.test(location.hostname)) {
