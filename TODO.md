@@ -71,3 +71,10 @@ Pracovní větev: `vylepseni`. Na webu (bocrew.com) běží jen `main`, takže z
 - [x] Sekce 2 a 3 jako dlaždice ve stylu sekce 1 (inspirace Duolingo): barevné záhlaví s ikonou, obtížnost 1–5, „zamáčknutí“ při stisku
 - [x] 1.9: místo ikon u režimů malá ukázka, co student uvidí (otočení karty, 4 možnosti, pole pro latinský / český název)
 - [x] 1.10: sekce 3 jako dlaždice s ukázkou, co následuje (atlas fotek, karta s pokrokem, známka, mix sad)
+
+## Verze 2.0 (ve větvi vylepseni)
+- [x] Jen 3 hry: Pexeso (otoč kartu), Tipovačka (A–D jako v Milionáři), Jako ve škole
+- [x] Jako ve škole i Test: ½ bodu za latinský + ½ bodu za český název (0 / ½ / 1)
+- [x] Klepnutí na hru ji rovnou spustí; sekce 3 = Další možnosti (Atlas, Test, Mix)
+- [x] 2.1: sekce 3 jen Atlas a Test („Prohlédni si nebo se otestuj“), Mix nahrazen odkazem „Vybrat všechny sady“ v sekci 1
+- [x] 2.2: Atlas s vějířem fotek, Test přejmenován na „Generálka“ (20 karet na ostro), náhled jako vysvědčení s razítkem
