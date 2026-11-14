@@ -25,3 +25,6 @@ Pracovní větev: `vylepseni`. Na webu (bocrew.com) běží jen `main`, takže z
 - [ ] Režim „mix“ – procvičit náhodně napříč vybranými sadami (příprava na test)
 - [ ] Patička s autorstvím materiálů a kontaktem
 - [ ] Rozvrhnout oblasti a sady (David navrhne)
+- [ ] Návrh úvodní stránky: oblasti pod sebou, uvnitř dlaždice se sadami (neexistující sady čárkovaně „připravuje se“), tlačítka „Procvičit sadu“ a „Mix – před testem“, patička s autorstvím
+- [ ] Ukazatel pokroku u každé sady (např. 75 % = 24 z 32 správně) – ukládat jen v prohlížeči studenta (localStorage), bez registrace
+  - rozhodnout, co zobrazit: poslední pokus / nejlepší výsledek / kolik druhů už umí
