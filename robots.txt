@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /tools/
+Disallow: /TODO.md
+
+Sitemap: https://bocrew.com/sitemap.xml
