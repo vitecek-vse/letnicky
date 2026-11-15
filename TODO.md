@@ -78,3 +78,9 @@ Pracovní větev: `vylepseni`. Na webu (bocrew.com) běží jen `main`, takže z
 - [x] Klepnutí na hru ji rovnou spustí; sekce 3 = Další možnosti (Atlas, Test, Mix)
 - [x] 2.1: sekce 3 jen Atlas a Test („Prohlédni si nebo se otestuj“), Mix nahrazen odkazem „Vybrat všechny sady“ v sekci 1
 - [x] 2.2: Atlas s vějířem fotek, Test přejmenován na „Generálka“ (20 karet na ostro), náhled jako vysvědčení s razítkem
+
+## Verze 2.3 (ve větvi vylepseni)
+- [x] Návod vedle O aplikaci (+ odkaz „Jak to funguje?“ nahoře)
+- [x] SEO: title, description, canonical, Open Graph + obrázek og.jpg, JSON-LD, robots.txt, sitemap.xml, statický seznam rostlin pro vyhledávače
+- [x] O aplikaci: poděkování ČZA Mělník a studentkám E. Vítečkové a E. Červinkové
+- Po změně dat spustit: `python3 tools/build-seo.py && python3 tools/build-sw.py`
