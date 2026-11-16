@@ -198,6 +198,7 @@
   .pv-choice span.ok{border-color:var(--green);background:#eef7ec;color:var(--green);font-weight:600}
   .pcard{display:flex;flex-direction:column;align-items:center;justify-content:center;width:62px;height:58px;background:#fff;border:1.5px solid #bcd6ee;border-radius:8px;text-align:center;padding:3px}
   .pcard.q{font-size:22px;font-weight:700;color:#7aa7d4}
+  .pcard.ph{padding:0;background:#eef0e8 url(img/covers/pexeso-tagetes.jpg) center/cover no-repeat}
   .pcard.a i{font-weight:600;font-size:10px;margin-bottom:2px}
   .pcard.a{font-size:10px}
   .parr{font-size:16px;color:#5b8fc4}
@@ -398,7 +399,7 @@
 <script src="data/sets.js"></script>
 <script>
 // ---------- verze ----------
-const VERSION = "2.3", VERSION_DATE = "15. 11. 2026";
+const VERSION = "2.4", VERSION_DATE = "16. 11. 2026";
 const LIVE = /(^|\.)bocrew\.com$/.test(location.hostname);
 document.getElementById("ver").textContent = "Verze " + VERSION + " · " + VERSION_DATE + (LIVE ? "" : " · testovací náhled");
 
@@ -535,7 +536,7 @@ const MODE_INFO = {
   both:   {title: "Jako ve škole", desc: "Napiš latinsky i česky. Za každý název ½ bodu.", lvl: 3, col: "green"}
 };
 const MODE_PREVIEW = {
-  flip: `<div class="pv pv-flip"><span class="pcard q">?</span><span class="parr">↻</span><span class="pcard a"><i>Tagetes erecta</i>aksamitník</span></div>`,
+  flip: `<div class="pv pv-flip"><span class="pcard ph" role="img" aria-label="Fotka: aksamitník vzpřímený"></span><span class="parr">↻</span><span class="pcard a"><i>Tagetes erecta</i>aksamitník</span></div>`,
   choice: `<div class="pv pv-choice"><span><b>A</b>Zinnia</span><span class="ok"><b>B</b>Tagetes</span><span><b>C</b>Salvia</span><span><b>D</b>Petunia</span></div>`,
   both: `<div class="pv pv-in two"><span class="pin">Tagetes erecta<b>|</b><u>½</u></span><span class="pin">aksamitník vzpřímený<u>½</u></span></div>`
 };

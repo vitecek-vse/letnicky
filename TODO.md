@@ -84,3 +84,11 @@ Pracovní větev: `vylepseni`. Na webu (bocrew.com) běží jen `main`, takže z
 - [x] SEO: title, description, canonical, Open Graph + obrázek og.jpg, JSON-LD, robots.txt, sitemap.xml, statický seznam rostlin pro vyhledávače
 - [x] O aplikaci: poděkování ČZA Mělník a studentkám E. Vítečkové a E. Červinkové
 - Po změně dat spustit: `python3 tools/build-seo.py && python3 tools/build-sw.py`
+
+## Verze 2.4 (ve větvi vylepseni)
+- [x] Sekce 2, dlaždice Pexeso: místo otazníku skutečná fotka aksamitníku (výřez img/covers/pexeso-tagetes.jpg)
+
+## Návrhy na další verze
+- [ ] Obrázky ve formátu WebP (o ~30 % menší, rychlejší první načtení a offline stažení na mobilních datech)
+- [ ] Tipovačka: v náhledu malá fotka nad odpověďmi, ať jsou ukázky jednotné
+- [ ] „Oprav chyby“: po hře tlačítko, které zopakuje jen rostliny, které nešly
