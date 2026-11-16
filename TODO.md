@@ -86,9 +86,7 @@ Pracovní větev: `vylepseni`. Na webu (bocrew.com) běží jen `main`, takže z
 - Po změně dat spustit: `python3 tools/build-seo.py && python3 tools/build-sw.py`
 
 ## Verze 2.4 (ve větvi vylepseni)
-- [x] Sekce 2, dlaždice Pexeso: místo otazníku skutečná fotka aksamitníku (výřez img/covers/pexeso-tagetes.jpg)
-
-## Návrhy na další verze
-- [ ] Obrázky ve formátu WebP (o ~30 % menší, rychlejší první načtení a offline stažení na mobilních datech)
-- [ ] Tipovačka: v náhledu malá fotka nad odpověďmi, ať jsou ukázky jednotné
-- [ ] „Oprav chyby“: po hře tlačítko, které zopakuje jen rostliny, které nešly
+- [x] Sekce 2, dlaždice Pexeso: místo otazníku skutečná fotka aksamitníku (výřez img/covers/pexeso-tagetes.webp)
+- [x] Fotky ve formátu WebP (4,8 MB → 3,5 MB, −27 %); uložený pokrok se při načtení převede na nové názvy
+- [x] Tipovačka: v náhledu fotka petúnie vedle odpovědí A–D
+- [x] Sekce 3: dlaždice „Oprav chyby“ – rostliny, které naposledy nešly (napříč sadami, i další den); co uhodneš, zmizí
