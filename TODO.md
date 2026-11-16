@@ -90,3 +90,4 @@ Pracovní větev: `vylepseni`. Na webu (bocrew.com) běží jen `main`, takže z
 - [x] Fotky ve formátu WebP (4,8 MB → 3,5 MB, −27 %); uložený pokrok se při načtení převede na nové názvy
 - [x] Tipovačka: v náhledu fotka petúnie vedle odpovědí A–D
 - [x] Sekce 3: dlaždice „Oprav chyby“ – rostliny, které naposledy nešly (napříč sadami, i další den); co uhodneš, zmizí
+- [x] Generálka: místo červeného razítka zelený kroužek se známkou (jednotné s appkou); počet karet v popisu podle vybrané sady

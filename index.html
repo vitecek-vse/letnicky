@@ -241,11 +241,12 @@
   .choice .ct{display:flex;flex-direction:column}
   .half{float:right;font-size:12px;color:var(--green);font-weight:600}
   .pv-cert{justify-content:center}
-  .cert{position:relative;width:118px;height:64px;background:#fffdf6;border:1.5px solid #e2cf9a;border-radius:6px;box-shadow:0 2px 6px rgba(0,0,0,.08);transform:rotate(-3deg);display:flex;flex-direction:column;justify-content:center;padding:6px 8px;text-align:left}
+  .cert{width:136px;height:60px;background:#fff;border:1.5px solid #e9d7a6;border-radius:8px;display:flex;align-items:center;gap:9px;padding:0 10px;text-align:left}
   .cert .ct1{font-size:9px;letter-spacing:.5px;text-transform:uppercase;color:#9a7b2c;font-weight:700}
-  .cert .ct2{font-size:12px;font-weight:700;color:var(--ink);margin-top:2px}
+  .cert .ct2{font-size:13px;font-weight:700;color:var(--green);margin-top:1px}
   .cert .ct3{font-size:9px;color:var(--muted);margin-top:2px}
-  .cert .stamp{position:absolute;right:-10px;top:-10px;width:36px;height:36px;border-radius:50%;background:#c0392b;color:#fff;font-weight:800;font-size:20px;display:flex;align-items:center;justify-content:center;border:2px dashed rgba(255,255,255,.7);transform:rotate(12deg);box-shadow:0 2px 5px rgba(0,0,0,.2)}
+  .cert .cg{flex:none;width:34px;height:34px;border-radius:50%;background:var(--green);color:#fff;font-weight:700;font-size:18px;display:flex;align-items:center;justify-content:center}
+  .cert .ctx{display:flex;flex-direction:column}
   .flinks{display:flex;justify-content:center;gap:10px;align-items:center}
   .flinks button{border:0;background:none;color:var(--green);font:inherit;font-size:14px;cursor:pointer;padding:4px 2px}
   .flinks button.on{font-weight:700;text-decoration:underline;text-underline-offset:3px}
@@ -503,7 +504,7 @@ function renderHome() {
     <div class="step"><span>3</span>Prohlédni si nebo se otestuj</div>
     <div class="atiles">
       ${actTile("bAtlas", "atlas", "Atlas", total, "jen koukat, nic se nezkouší", !total)}
-      ${actTile("bTest", "test", "Generálka", Math.min(20, total), "20 karet na ostro – zjisti, na kolik to umíš", !total)}
+      ${actTile("bTest", "test", "Generálka", Math.min(20, total), `${Math.min(20, total)} karet na ostro – zjisti, na kolik to umíš`, !total)}
       ${fixes.length ? actTile("bFix", "fix", "Oprav chyby", fixes.length, "zopakuj rostliny, které ti naposledy nešly", false) : ""}
     </div>
     `;
@@ -575,7 +576,7 @@ function actPreview(kind) {
     return `<div class="pv pv-mix">${fan.slice(0, 3).map((c, i) => `<span style="background-image:url('${c}');transform:rotate(${(i - 1) * 9}deg)"></span>`).join("")}</div>`; }
   if (kind === "go") return `<div class="pv pv-go"><span class="ph" style="background-image:url('${pics[0]}')"></span><span class="gi"><b>Karta 1 / ${tot}</b><span class="pb"><i style="width:${Math.max(8, k / tot * 100)}%"></i></span><small>Umíš ${k} z ${tot}</small></span></div>`;
   if (kind === "fix") return `<div class="pv pv-mix pv-fix">${mistakes().slice(0, 3).map((p, i, a) => `<span style="background-image:url('${p.img}');transform:rotate(${(i - (a.length - 1) / 2) * 9}deg)"></span>`).join("")}</div>`;
-  if (kind === "test") return `<div class="pv pv-cert"><div class="cert"><span class="ct1">Poznávačka</span><span class="ct2">⭐ výborně</span><span class="stamp">1</span><span class="ct3">18 / 20 bodů</span></div></div>`;
+  if (kind === "test") return `<div class="pv pv-cert"><div class="cert"><span class="cg">1</span><span class="ctx"><span class="ct1">Poznávačka</span><span class="ct2">výborně</span><span class="ct3">18 / 20 bodů</span></span></div></div>`;
   return `<div class="pv pv-mix">${Object.values(SETS).map((s, i) => `<span style="background-image:url('${s.cover}');transform:rotate(${(i - 1) * 9}deg)"></span>`).join("")}</div>`;
 }
 function actTile(id, kind, title, count, desc, disabled) {
@@ -619,7 +620,7 @@ function start({ids, kind, list}) {
   renderCard();
 }
 function head() {
-  const label = S.kind === "test" ? "Generálka · 20 karet na ostro" : S.kind === "wrong" ? "Opakování chybných" : MODE_INFO[S.mode].title;
+  const label = S.kind === "test" ? `Generálka · ${S.deck.length} karet na ostro` : S.kind === "wrong" ? "Opakování chybných" : MODE_INFO[S.mode].title;
   return `<div class="top"><button class="back" id="bBack">← Sady</button>
     <div class="stats">Body <b>${fmt(S.pts)}</b> / ${S.idx} · Zbývá <b>${S.deck.length - S.idx}</b></div></div>
     <div class="sub" style="margin:-4px 0 8px">${label} · ${esc(S.ids.map(setName).join(", "))}</div>
