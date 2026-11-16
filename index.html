@@ -201,6 +201,15 @@
   .pv-choice span.ok{border-color:var(--green);background:#eef7ec;color:var(--green);font-weight:600}
   .pcard{display:flex;flex-direction:column;align-items:center;justify-content:center;width:62px;height:58px;background:#fff;border:1.5px solid #bcd6ee;border-radius:8px;text-align:center;padding:3px}
   .pcard.q{font-size:22px;font-weight:700;color:#7aa7d4}
+  .pcard.ph{padding:0;background:#eef0e8 url(img/covers/pexeso-tagetes.webp) center/cover no-repeat}
+  .pv-cq{gap:6px}
+  .pv-cq .cph{flex:none;width:52px;height:58px;border-radius:8px;border:1.5px solid #d6cdea;background:#eef0e8 url(img/letnicky-1/25.webp) center/cover no-repeat}
+  .pv-cq .pv-choice{grid-template-columns:1fr;gap:2px;max-width:92px;flex:1}
+  .pv-cq .pv-choice span{padding:1px 4px;font-size:10px;border-width:1px;border-radius:5px}
+  .a-fix{grid-column:1/-1;flex-direction:row;border-color:#f0c9c4}
+  .a-fix .mhead{background:#fce4e4;width:132px;height:auto;min-height:84px;flex:none}
+  .a-fix .tb{flex:1;text-align:left;align-self:center}
+  .pv-fix span{width:34px;height:44px;margin:0 -5px}
   .pcard.a i{font-weight:600;font-size:10px;margin-bottom:2px}
   .pcard.a{font-size:10px}
   .parr{font-size:16px;color:#5b8fc4}
@@ -235,11 +244,12 @@
   .choice .ct{display:flex;flex-direction:column}
   .half{float:right;font-size:12px;color:var(--green);font-weight:600}
   .pv-cert{justify-content:center}
-  .cert{position:relative;width:118px;height:64px;background:#fffdf6;border:1.5px solid #e2cf9a;border-radius:6px;box-shadow:0 2px 6px rgba(0,0,0,.08);transform:rotate(-3deg);display:flex;flex-direction:column;justify-content:center;padding:6px 8px;text-align:left}
+  .cert{width:136px;height:60px;background:#fff;border:1.5px solid #e9d7a6;border-radius:8px;display:flex;align-items:center;gap:9px;padding:0 10px;text-align:left}
   .cert .ct1{font-size:9px;letter-spacing:.5px;text-transform:uppercase;color:#9a7b2c;font-weight:700}
-  .cert .ct2{font-size:12px;font-weight:700;color:var(--ink);margin-top:2px}
+  .cert .ct2{font-size:13px;font-weight:700;color:var(--green);margin-top:1px}
   .cert .ct3{font-size:9px;color:var(--muted);margin-top:2px}
-  .cert .stamp{position:absolute;right:-10px;top:-10px;width:36px;height:36px;border-radius:50%;background:#c0392b;color:#fff;font-weight:800;font-size:20px;display:flex;align-items:center;justify-content:center;border:2px dashed rgba(255,255,255,.7);transform:rotate(12deg);box-shadow:0 2px 5px rgba(0,0,0,.2)}
+  .cert .cg{flex:none;width:34px;height:34px;border-radius:50%;background:var(--green);color:#fff;font-weight:700;font-size:18px;display:flex;align-items:center;justify-content:center}
+  .cert .ctx{display:flex;flex-direction:column}
   .flinks{display:flex;justify-content:center;gap:10px;align-items:center}
   .flinks button{border:0;background:none;color:var(--green);font:inherit;font-size:14px;cursor:pointer;padding:4px 2px}
   .flinks button.on{font-weight:700;text-decoration:underline;text-underline-offset:3px}
@@ -347,7 +357,7 @@
     <ol>
       <li><b>Vyber sadu</b> – klepni na Letničky č. 1, 2 nebo 3. Můžeš vybrat i víc najednou.</li>
       <li><b>Vyber hru</b> – klepnutím se hned spustí.</li>
-      <li><b>Prohlédni si nebo se otestuj</b> – Atlas nebo Generálka.</li>
+      <li><b>Prohlédni si nebo se otestuj</b> – Atlas, Generálka, případně Oprav chyby.</li>
     </ol>
     <h3>Hry</h3>
     <ul>
@@ -359,6 +369,7 @@
     <ul>
       <li><b>Atlas</b> – fotky s názvy, nic se nezkouší. Ideální na začátek.</li>
       <li><b>Generálka</b> – 20 náhodných karet na ostro, bez nápovědy, na konci známka.</li>
+      <li><b>Oprav chyby</b> – objeví se, když ti něco nešlo. Zopakuje jen tyhle rostliny, klidně i další den. Co uhodneš, zmizí.</li>
     </ul>
     <h3>Tipy</h3>
     <ul>
@@ -401,7 +412,7 @@
 <script src="data/sets.js"></script>
 <script>
 // ---------- verze ----------
-const VERSION = "2.3", VERSION_DATE = "15. 11. 2026";
+const VERSION = "2.4", VERSION_DATE = "16. 11. 2026";
 const LIVE = /(^|\.)bocrew\.com$/.test(location.hostname);
 document.getElementById("ver").textContent = "Verze " + VERSION + " · " + VERSION_DATE + (LIVE ? "" : " · testovací náhled");
 
@@ -428,10 +439,17 @@ const store = {
 };
 let progress = store.get("progress-v1", {});   // {setId: {last, best, date, grade}}
 let boxes = store.get("boxes-v1", {});         // {img: 0..4} chytré opakování (Leitner)
+// 2.4: fotky přešly z .jpg na .webp – převést uložený pokrok na nové názvy
+if (Object.keys(boxes).some(k => k.endsWith(".jpg"))) {
+  boxes = Object.fromEntries(Object.entries(boxes).map(([k, v]) => [k.replace(/\.jpg$/, ".webp"), v]));
+  store.set("boxes-v1", boxes);
+}
 let selected = store.get("selected-v1", ["letnicky-1"]).filter(id => SETS[id]);
 let mode = store.get("mode-v1", "flip"); if (!["flip","choice","both"].includes(mode)) mode = "both";
 const KNOWN = 2;                                // „umíš“ = aspoň 2× po sobě správně
 const known = id => SETS[id].plants.filter(p => (boxes[p.img] || 0) >= KNOWN).length;
+// „k opravě“ = rostlina, kterou už zkoušel/a a naposledy nešla (krabička 0) – napříč všemi sadami
+const mistakes = () => plantsOf(Object.keys(SETS)).filter(p => boxes[p.img] === 0);
 
 // ---------- porovnání odpovědí ----------
 const norm = s => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase()
@@ -473,6 +491,7 @@ window.addEventListener("hashchange", () => { if (!location.hash && view !== "ho
 
 // ---------- úvodní stránka ----------
 function renderHome() {
+  const fixes = mistakes();
   view = "home"; if (location.hash) history.replaceState(null, "", location.pathname + location.search);
   const total = selected.reduce((n, id) => n + SETS[id].plants.length, 0);
   const all = Object.values(SETS).reduce((n, s) => n + s.plants.length, 0);
@@ -488,7 +507,8 @@ function renderHome() {
     <div class="step"><span>3</span>Prohlédni si nebo se otestuj</div>
     <div class="atiles">
       ${actTile("bAtlas", "atlas", "Atlas", total, "jen koukat, nic se nezkouší", !total)}
-      ${actTile("bTest", "test", "Generálka", Math.min(20, total), "20 karet na ostro – zjisti, na kolik to umíš", !total)}
+      ${actTile("bTest", "test", "Generálka", Math.min(20, total), `${Math.min(20, total)} karet na ostro – zjisti, na kolik to umíš`, !total)}
+      ${fixes.length ? actTile("bFix", "fix", "Oprav chyby", fixes.length, "zopakuj rostliny, které ti naposledy nešly", false) : ""}
     </div>
     `;
   document.querySelectorAll(".tile").forEach(t => t.onclick = () => {
@@ -502,6 +522,7 @@ function renderHome() {
     start({ids: selected, kind: "practice"});
   });
   $("bTest").onclick = () => start({ids: selected, kind: "test"});
+  if ($("bFix")) $("bFix").onclick = () => start({ids: [...new Set(fixes.map(p => p.set))], kind: "wrong", list: fixes});
   $("bAtlas").onclick = renderAtlas;
   $("bGuide").onclick = () => togglePanel("pGuide", true);
   if ($("bAll")) $("bAll").onclick = () => { selected = Object.keys(SETS); store.set("selected-v1", selected); renderHome(); };
@@ -538,8 +559,8 @@ const MODE_INFO = {
   both:   {title: "Jako ve škole", desc: "Napiš latinsky i česky. Za každý název ½ bodu.", lvl: 3, col: "green"}
 };
 const MODE_PREVIEW = {
-  flip: `<div class="pv pv-flip"><span class="pcard q">?</span><span class="parr">↻</span><span class="pcard a"><i>Tagetes erecta</i>aksamitník</span></div>`,
-  choice: `<div class="pv pv-choice"><span><b>A</b>Zinnia</span><span class="ok"><b>B</b>Tagetes</span><span><b>C</b>Salvia</span><span><b>D</b>Petunia</span></div>`,
+  flip: `<div class="pv pv-flip"><span class="pcard ph" role="img" aria-label="Fotka: aksamitník vzpřímený"></span><span class="parr">↻</span><span class="pcard a"><i>Tagetes erecta</i>aksamitník</span></div>`,
+  choice: `<div class="pv pv-cq"><span class="cph" role="img" aria-label="Fotka: petúnie"></span><div class="pv-choice"><span><b>A</b>Zinnia</span><span><b>B</b>Salvia</span><span><b>C</b>Tagetes</span><span class="ok"><b>D</b>Petunia</span></div></div>`,
   both: `<div class="pv pv-in two"><span class="pin">Tagetes erecta<b>|</b><u>½</u></span><span class="pin">aksamitník vzpřímený<u>½</u></span></div>`
 };
 const LVL = ["", "Lehké", "Střední", "Těžké"];
@@ -557,7 +578,8 @@ function actPreview(kind) {
   if (kind === "atlas") { const ids = (selected.length ? selected : Object.keys(SETS)); const fan = ids.length >= 3 ? ids.map(id => SETS[id].cover) : [pics[3], ...ids.map(id => SETS[id].cover), pics[5]].slice(0, 3);
     return `<div class="pv pv-mix">${fan.slice(0, 3).map((c, i) => `<span style="background-image:url('${c}');transform:rotate(${(i - 1) * 9}deg)"></span>`).join("")}</div>`; }
   if (kind === "go") return `<div class="pv pv-go"><span class="ph" style="background-image:url('${pics[0]}')"></span><span class="gi"><b>Karta 1 / ${tot}</b><span class="pb"><i style="width:${Math.max(8, k / tot * 100)}%"></i></span><small>Umíš ${k} z ${tot}</small></span></div>`;
-  if (kind === "test") return `<div class="pv pv-cert"><div class="cert"><span class="ct1">Poznávačka</span><span class="ct2">⭐ výborně</span><span class="stamp">1</span><span class="ct3">18 / 20 bodů</span></div></div>`;
+  if (kind === "fix") return `<div class="pv pv-mix pv-fix">${mistakes().slice(0, 3).map((p, i, a) => `<span style="background-image:url('${p.img}');transform:rotate(${(i - (a.length - 1) / 2) * 9}deg)"></span>`).join("")}</div>`;
+  if (kind === "test") return `<div class="pv pv-cert"><div class="cert"><span class="cg">1</span><span class="ctx"><span class="ct1">Poznávačka</span><span class="ct2">výborně</span><span class="ct3">18 / 20 bodů</span></span></div></div>`;
   return `<div class="pv pv-mix">${Object.values(SETS).map((s, i) => `<span style="background-image:url('${s.cover}');transform:rotate(${(i - 1) * 9}deg)"></span>`).join("")}</div>`;
 }
 function actTile(id, kind, title, count, desc, disabled) {
@@ -601,7 +623,7 @@ function start({ids, kind, list}) {
   renderCard();
 }
 function head() {
-  const label = S.kind === "test" ? "Generálka · 20 karet na ostro" : S.kind === "wrong" ? "Opakování chybných" : MODE_INFO[S.mode].title;
+  const label = S.kind === "test" ? `Generálka · ${S.deck.length} karet na ostro` : S.kind === "wrong" ? "Opakování chybných" : MODE_INFO[S.mode].title;
   return `<div class="top"><button class="back" id="bBack">← Sady</button>
     <div class="stats">Body <b>${fmt(S.pts)}</b> / ${S.idx} · Zbývá <b>${S.deck.length - S.idx}</b></div></div>
     <div class="sub" style="margin:-4px 0 8px">${label} · ${esc(S.ids.map(setName).join(", "))}</div>

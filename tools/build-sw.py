@@ -2,7 +2,7 @@
 Spustit po každé změně fotek, dat nebo index.html:  python3 tools/build-sw.py"""
 import glob, hashlib, json, os, re
 os.chdir(os.path.join(os.path.dirname(__file__), ".."))
-assets = ["./", "index.html", "data/sets.js", "manifest.webmanifest", "og.jpg"] + sorted(glob.glob("icons/*.png")) + sorted(glob.glob("img/*/*.jpg"))
+assets = ["./", "index.html", "data/sets.js", "manifest.webmanifest", "og.jpg", "favicon.ico"] + sorted(glob.glob("icons/*.png")) + sorted(glob.glob("img/*/*.webp"))
 h = hashlib.sha1()
 for a in assets[1:]:
     h.update(open(a, "rb").read())
