@@ -492,7 +492,6 @@ function renderHome() {
   const all = Object.values(SETS).reduce((n, s) => n + s.plants.length, 0);
   $("app").innerHTML = `
     <h1>🌼 Poznávačka rostlin</h1>
-    <div class="sub">3 kroky a jedeš · <button class="linkbtn inl" id="bGuide">Návod</button></div>
     <div class="step"><span>1</span>Vyber sadu</div>
     ${AREAS.map(a => `<div class="area"><h2>${esc(a.name)}</h2><div class="tiles">${a.sets.map(tile).join("")}</div></div>`).join("")}
     <div class="selhelp">${selHelp(total)}</div>
@@ -519,7 +518,6 @@ function renderHome() {
   $("bTest").onclick = () => start({ids: selected, kind: "test"});
   if ($("bFix")) $("bFix").onclick = () => start({ids: [...new Set(fixes.map(p => p.set))], kind: "wrong", list: fixes});
   $("bAtlas").onclick = renderAtlas;
-  $("bGuide").onclick = () => togglePanel("pGuide", true);
   if ($("bAll")) $("bAll").onclick = () => { selected = Object.keys(SETS); store.set("selected-v1", selected); renderHome(); };
 }
 function tile(s) {

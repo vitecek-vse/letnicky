@@ -96,4 +96,4 @@ Pracovní větev: `vylepseni`. Na webu (bocrew.com) běží jen `main`, takže z
 - [x] Projekt působí anonymně a neutrálně: odstraněn odkaz na školu, poděkování jménům a odkaz na GitHub
 - [x] O aplikaci: „Neziskový projekt určený výhradně k tréninkovým účelům“, není oficiálním materiálem žádné školy
 - [x] Název stránky, klíčová slova, podtitulek, manifest a README bez názvu školy
-- [x] Podtitulek jen „3 kroky a jedeš · Návod“
+- [x] Řádek pod nadpisem odstraněn úplně (Návod zůstává v patičce)
