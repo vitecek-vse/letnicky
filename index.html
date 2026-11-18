@@ -13,9 +13,9 @@
 <link rel="icon" type="image/png" sizes="48x48" href="icons/favicon-48.png">
 <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
 <link rel="manifest" href="manifest.webmanifest">
-<title>Poznávačka letniček – procvičování rostlin online | ČZA Mělník</title>
+<title>Poznávačka letniček – procvičování rostlin online</title>
 <meta name="description" content="Zdarma procvičuj poznávačku letniček podle fotek: 76 druhů s latinskými a českými názvy, pexeso, tipovačka a generálka se známkou. Funguje v mobilu i offline.">
-<meta name="keywords" content="poznávačka, letničky, poznávačka rostlin, latinské názvy rostlin, zahradnictví, ČZA Mělník, kartičky, procvičování">
+<meta name="keywords" content="poznávačka, letničky, poznávačka rostlin, latinské názvy rostlin, zahradnictví, kartičky, procvičování">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://bocrew.com/">
 <meta property="og:type" content="website">
@@ -381,12 +381,8 @@
     </ul>
   </div>
   <div class="aboutbox" id="pAbout" hidden>
-    <p>Poznávačka rostlin pro procvičování studentů České zahradnické akademie Mělník. Vznikla dobrovolně a zdarma na podporu školy.</p>
-    <h3>Poděkování</h3>
-    <ul>
-      <li><a href="https://www.zas-me.cz/" target="_blank" rel="noopener">České zahradnické akademii Mělník</a> za poskytnuté studijní materiály – fotografie a názvy rostlin.</li>
-      <li>Studentkám <b>E. Vítečkové</b> a <b>E. Červinkové</b> za cenné podněty při tvorbě a testování aplikace.</li>
-    </ul>
+    <p><b>Neziskový projekt určený výhradně k tréninkovým účelům.</b> Slouží k procvičování poznávání letniček podle fotografií a jejich latinských a českých názvů. Je zdarma, bez reklam a bez jakéhokoli výdělku.</p>
+    <p>Nejde o oficiální studijní materiál žádné školy ani instituce.</p>
     <h3>Jak se hodnotí</h3>
     <ul>
       <li><b>Umíš X z Y</b> – rostlinu „umíš“, když za ni aspoň 2× po sobě dostaneš celý bod. Za 0 bodů se počítání vrací na začátek. Odpověď s nápovědou se do „umíš“ nepočítá.</li>
@@ -404,7 +400,6 @@
       <li><b>Anonymní statistika návštěv</b> (GoatCounter) – neukládá IP adresy ani jiné osobní údaje a nepoužívá cookies.</li>
       <li><b>Hosting GitHub Pages</b> – jako u běžného webhostingu provozovatel z bezpečnostních důvodů zaznamenává technické údaje o přístupu (např. IP adresu).</li>
       <li><b>Ochrana soukromí od návrhu</b> (privacy by design, zásada minimalizace údajů podle GDPR) – web zpracovává jen to, co je nutné pro jeho fungování.</li>
-      <li><b>Otevřený zdrojový kód</b> – kdokoli si může ověřit, co web dělá: <a href="https://github.com/vitecek-vse/letnicky" target="_blank" rel="noopener">GitHub</a>.</li>
     </ul>
     <p class="ver" id="ver"></p>
   </div></footer></div>
@@ -412,7 +407,7 @@
 <script src="data/sets.js"></script>
 <script>
 // ---------- verze ----------
-const VERSION = "2.4", VERSION_DATE = "16. 11. 2026";
+const VERSION = "2.5", VERSION_DATE = "18. 11. 2026";
 const LIVE = /(^|\.)bocrew\.com$/.test(location.hostname);
 document.getElementById("ver").textContent = "Verze " + VERSION + " · " + VERSION_DATE + (LIVE ? "" : " · testovací náhled");
 
@@ -497,7 +492,7 @@ function renderHome() {
   const all = Object.values(SETS).reduce((n, s) => n + s.plants.length, 0);
   $("app").innerHTML = `
     <h1>🌼 Poznávačka rostlin</h1>
-    <div class="sub">ČZA Mělník · 3 kroky a jedeš · <button class="linkbtn inl" id="bGuide">Jak to funguje?</button></div>
+    <div class="sub">Neziskový tréninkový projekt · 3 kroky a jedeš · <button class="linkbtn inl" id="bGuide">Jak to funguje?</button></div>
     <div class="step"><span>1</span>Vyber sadu</div>
     ${AREAS.map(a => `<div class="area"><h2>${esc(a.name)}</h2><div class="tiles">${a.sets.map(tile).join("")}</div></div>`).join("")}
     <div class="selhelp">${selHelp(total)}</div>

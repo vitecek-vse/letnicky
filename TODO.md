@@ -16,8 +16,8 @@ Pracovní větev: `vylepseni`. Na webu (bocrew.com) běží jen `main`, takže z
 - [x] Ikona a fullscreen pro iPhone (Přidat na plochu)
 - [ ] (sem doplňovat další postřehy z používání)
 
-## Verze pro celou školu (ČZA Mělník)
-- [ ] Nejdřív souhlas autorky materiálů, pak oslovit vedení školy
+## Verze pro více uživatelů
+- [ ] Nejdřív souhlas autorky materiálů
 - [x] Úvodní stránka s výběrem oblastí a sad, např.:
   - Letničky → sada 1, sada 2, sada 3…
   - (další oblasti podle materiálů učitelů: trvalky, dřeviny, pokojové rostliny…)
@@ -82,7 +82,7 @@ Pracovní větev: `vylepseni`. Na webu (bocrew.com) běží jen `main`, takže z
 ## Verze 2.3 (ve větvi vylepseni)
 - [x] Návod vedle O aplikaci (+ odkaz „Jak to funguje?“ nahoře)
 - [x] SEO: title, description, canonical, Open Graph + obrázek og.jpg, JSON-LD, robots.txt, sitemap.xml, statický seznam rostlin pro vyhledávače
-- [x] O aplikaci: poděkování ČZA Mělník a studentkám E. Vítečkové a E. Červinkové
+- [x] O aplikaci: poděkování (ve 2.5 odstraněno – projekt je anonymní a neutrální)
 - Po změně dat spustit: `python3 tools/build-seo.py && python3 tools/build-sw.py`
 
 ## Verze 2.4 (ve větvi vylepseni)
@@ -91,3 +91,8 @@ Pracovní větev: `vylepseni`. Na webu (bocrew.com) běží jen `main`, takže z
 - [x] Tipovačka: v náhledu fotka petúnie vedle odpovědí A–D
 - [x] Sekce 3: dlaždice „Oprav chyby“ – rostliny, které naposledy nešly (napříč sadami, i další den); co uhodneš, zmizí
 - [x] Generálka: místo červeného razítka zelený kroužek se známkou (jednotné s appkou); počet karet v popisu podle vybrané sady
+
+## Verze 2.5
+- [x] Projekt působí anonymně a neutrálně: odstraněn odkaz na školu, poděkování jménům a odkaz na GitHub
+- [x] O aplikaci: „Neziskový projekt určený výhradně k tréninkovým účelům“, není oficiálním materiálem žádné školy
+- [x] Název stránky, klíčová slova, podtitulek, manifest a README bez názvu školy
